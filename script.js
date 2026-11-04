@@ -53,44 +53,56 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
 
-  // Seven sample timetables in the Fiztekh OS demo; each weekday remembers its ticks locally.
+  // Interactive sample planner for each day of the week, not an AI service.
   const demoWeek={
-    mon:{name:"Понедельник",items:[["book","Математика","Повторить уравнения"],["chip","Информатика","Написать первую программу"],["mentor","План недели","Поставить три цели"]]},
-    tue:{name:"Вторник",items:[["flask","Физика","Провести небольшой эксперимент"],["book","Русский язык","Подготовить письменный ответ"],["bulb","Мой проект","Найти проблему для исследования"]]},
-    wed:{name:"Среда",items:[["book","Математика","Разобрать новую тему"],["bulb","Мой проект","Проверить три гипотезы"],["mentor","Наставник","Обсудить цели недели"]]},
-    thu:{name:"Четверг",items:[["chip","Технологии","Создать простой прототип"],["users","Командная встреча","Распределить задачи"],["book","Английский язык","Подготовить рассказ о проекте"]]},
-    fri:{name:"Пятница",items:[["rocket","Презентация идеи","Подготовить три слайда"],["target","Обратная связь","Показать идею наставнику"],["book","Повторение","Закрепить темы недели"]]},
-    sat:{name:"Суббота",items:[["compass","Исследование","Посетить музей или лабораторию"],["users","Клуб создателей","Обсудить идеи с друзьями"],["bulb","Личный проект","Улучшить прототип"]]},
-    sun:{name:"Воскресенье",items:[["book","Чтение","Прочитать интересную главу"],["heart","Время с семьёй","Поделиться открытиями недели"],["target","Планирование","Выбрать цель на понедельник"]]}
+    mon:{name:"Понедельник",items:[["book","Уроки","Математика и информатика"],["bulb","Мой проект","Поставить цель на неделю"],["target","Развитие","Составить список полезных привычек"]]},
+    tue:{name:"Вторник",items:[["book","Уроки","Русский язык и физика"],["flask","Мой проект","Провести первый эксперимент"],["compass","Развитие","Прочитать научную статью"]]},
+    wed:{name:"Среда",items:[["book","Уроки","Математика и английский"],["bulb","Мой проект","Проверить три гипотезы"],["mentor","Развитие","Обсудить идеи с наставником"]]},
+    thu:{name:"Четверг",items:[["book","Уроки","Физика и технология"],["chip","Мой проект","Создать простой прототип"],["users","Развитие","Провести командную встречу"]]},
+    fri:{name:"Пятница",items:[["book","Уроки","Закрепить материал недели"],["rocket","Мой проект","Подготовить презентацию идеи"],["target","Развитие","Подвести итоги недели"]]},
+    sat:{name:"Суббота",items:[["book","Уроки","Повторение по желанию"],["users","Мой проект","Встретиться с командой"],["compass","Развитие","Посетить интересное место"]]},
+    sun:{name:"Воскресенье",items:[["book","Уроки","Лёгкое чтение"],["bulb","Мой проект","Записать новые идеи"],["heart","Развитие","Отдохнуть и спланировать неделю"]]}
+  };
+  const demoAlternativeTasks={
+    mon:[["book","Уроки","Разобрать сложную тему"],["chip","Мой проект","Нарисовать схему будущего продукта"],["mentor","Развитие","Поговорить с наставником"]],
+    tue:[["book","Уроки","Заняться самостоятельной практикой"],["bulb","Мой проект","Опросить будущих пользователей"],["target","Развитие","Потренировать навык презентации"]],
+    wed:[["book","Уроки","Повторить пройденное"],["flask","Мой проект","Проверить идею на практике"],["compass","Развитие","Изучить новую технологию"]],
+    thu:[["book","Уроки","Решить задачи по предметам"],["chip","Мой проект","Улучшить прототип"],["mentor","Развитие","Получить обратную связь"]],
+    fri:[["book","Уроки","Закрыть учебные задачи"],["rocket","Мой проект","Показать результат команде"],["target","Развитие","Зафиксировать достижения"]],
+    sat:[["book","Уроки","Почитать о науке"],["flask","Мой проект","Сделать домашний эксперимент"],["heart","Развитие","Погулять и восстановить силы"]],
+    sun:[["book","Уроки","Подготовиться к новой неделе"],["bulb","Мой проект","Выбрать следующий шаг"],["compass","Развитие","Составить личный план"]]
   };
   const demoWeekButtons=Array.from(document.querySelectorAll("[data-demo-day]"));
   const demoTaskList=document.getElementById("demo-task-list");
   const demoDayHeading=document.getElementById("demo-day-heading");
   const demoDial=document.getElementById("demo-dial");
   const demoProgressNumber=document.getElementById("demo-progress-number");
+  const createDemoPlan=document.getElementById("demo-create-plan");
   if(demoWeekButtons.length&&demoTaskList&&demoDayHeading&&demoDial&&demoProgressNumber){
     const completedByDay={wed:[true,false,false]};
+    const planVersions={};
     let activeDemoDay="wed";
+    function currentItems(day){return planVersions[day]?demoAlternativeTasks[day]:demoWeek[day].items;}
     function updateDemoProgress(){
       const completed=completedByDay[activeDemoDay]||[];
       const count=completed.filter(Boolean).length;
-      const percent=Math.round(count/demoWeek[activeDemoDay].items.length*100);
+      const percent=Math.round(count/currentItems(activeDemoDay).length*100);
       demoDial.style.setProperty("--percent",String(percent));
       demoProgressNumber.textContent=percent+"%";
     }
     function renderDemoDay(day){
       if(!Object.prototype.hasOwnProperty.call(demoWeek,day))return;
       activeDemoDay=day;
-      const dayData=demoWeek[day];
-      const completed=completedByDay[day]||(completedByDay[day]=dayData.items.map(function(){return false;}));
+      const items=currentItems(day);
+      const completed=completedByDay[day]||(completedByDay[day]=items.map(function(){return false;}));
       demoWeekButtons.forEach(function(button){
         const active=button.dataset.demoDay===day;
         button.classList.toggle("is-day-active",active);
         button.setAttribute("aria-pressed",String(active));
       });
-      demoDayHeading.textContent=dayData.name+" · учебный план";
+      demoDayHeading.textContent=demoWeek[day].name+" · план на день";
       demoTaskList.replaceChildren();
-      dayData.items.forEach(function(item,index){
+      items.forEach(function(item,index){
         const label=document.createElement("label");
         label.className="demo-task demo-check-task";
         const check=document.createElement("input");
@@ -125,7 +137,43 @@ document.addEventListener("DOMContentLoaded",function(){
     demoWeekButtons.forEach(function(button){
       button.addEventListener("click",function(){renderDemoDay(button.dataset.demoDay);});
     });
+    if(createDemoPlan){
+      createDemoPlan.addEventListener("click",function(){
+        planVersions[activeDemoDay]=!planVersions[activeDemoDay];
+        completedByDay[activeDemoDay]=[false,false,false];
+        renderDemoDay(activeDemoDay);
+        createDemoPlan.classList.remove("plan-created");
+        void createDemoPlan.offsetWidth;
+        createDemoPlan.classList.add("plan-created");
+      });
+    }
     renderDemoDay(activeDemoDay);
+  }
+
+  // Click the big level number to preview subsequent creator levels.
+  const levelButton=document.getElementById("passport-next-level");
+  const levelNumber=document.getElementById("passport-level-number");
+  const nextNumber=document.getElementById("passport-next-number");
+  const xpLabel=document.getElementById("passport-xp");
+  const xpBar=document.getElementById("passport-level-fill");
+  const levelProgress=document.getElementById("passport-level-progress");
+  if(levelButton&&levelNumber&&nextNumber&&xpLabel&&xpBar&&levelProgress){
+    let level=10;
+    const progressValues=[68,34,51,76,42,85,27,63];
+    function renderPassportLevel(){
+      const percent=progressValues[(level-10)%progressValues.length];
+      levelNumber.textContent=String(level);
+      nextNumber.textContent=(level+1)+" уровень";
+      xpLabel.textContent=(percent*10)+" / 1000 XP";
+      levelProgress.setAttribute("aria-valuenow",String(percent));
+      levelButton.setAttribute("aria-label","Уровень "+level+". Нажми, чтобы перейти на уровень "+(level+1));
+      xpBar.style.width=percent+"%";
+    }
+    levelButton.addEventListener("click",function(){
+      level+=1;
+      renderPassportLevel();
+    });
+    renderPassportLevel();
   }
 
   // Gallery of school events (not a test).
