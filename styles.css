@@ -286,26 +286,46 @@
 }
 
 
-/* Gentle continuous rotation of the two floating text badges.
-   Individual 'rotate' composes with existing floating animation's 'transform'. */
-@keyframes hero-badge-sway-a{
-  0%,100%{rotate:-5deg}
-  50%{rotate:5deg}
+/* Two labels orbit around the center, counter-rotating to stay readable. */
+@keyframes hero-label-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes hero-label-upright{from{rotate:0deg}to{rotate:-360deg}}
+.badge-orbit{
+  position:absolute;left:50%;top:50%;
+  width:0;height:0;
+  pointer-events:none;
+  z-index:5;
 }
-@keyframes hero-badge-sway-b{
-  0%,100%{rotate:4deg}
-  50%{rotate:-5deg}
+.badge-orbit .floating-label{
+  position:absolute;
+  top:0;left:var(--badge-orbit-radius,190px);
+  right:auto;bottom:auto;
+  width:max-content;max-width:195px;
+  text-align:center;
+  transform:translateY(-50%);
+  animation:none;
+  white-space:normal;
+  box-shadow:0 12px 35px #0008;
 }
+.badge-orbit-one{--badge-orbit-radius:195px}
+.badge-orbit-two{--badge-orbit-radius:195px}
 @media(prefers-reduced-motion:no-preference){
-  .hero-visual .floating-one{
-    transform-origin:50% 50%;
-    animation:float 6s ease-in-out infinite,hero-badge-sway-a 7.5s ease-in-out infinite;
-  }
-  .hero-visual .floating-two{
-    transform-origin:50% 50%;
-    animation:float 6s ease-in-out -2s infinite,hero-badge-sway-b 8.5s ease-in-out infinite;
-  }
+  .badge-orbit-one{animation:hero-label-orbit 24s linear infinite}
+  .badge-orbit-two{animation:hero-label-orbit 24s linear -12s infinite}
+  .badge-orbit .floating-label{animation:hero-label-upright 24s linear infinite}
+  .badge-orbit-two .floating-label{animation-delay:-12s}
+}
+@media(max-width:760px){
+  .badge-orbit-one,.badge-orbit-two{--badge-orbit-radius:150px}
+  .badge-orbit .floating-label{padding:9px 12px;max-width:150px;font-size:10px}
+}
+@media(max-width:440px){
+  .badge-orbit-one,.badge-orbit-two{--badge-orbit-radius:116px}
+  .badge-orbit .floating-label{max-width:115px;font-size:9px;padding:8px}
 }
 @media(prefers-reduced-motion:reduce){
-  .hero-visual .floating-one,.hero-visual .floating-two{rotate:0deg;animation:none!important}
+  .badge-orbit-one{transform:rotate(-55deg)}
+  .badge-orbit-two{transform:rotate(125deg)}
+  .badge-orbit .floating-label{animation:none!important}
+  .badge-orbit-one .floating-label{rotate:55deg}
+  .badge-orbit-two .floating-label{rotate:-125deg}
 }
