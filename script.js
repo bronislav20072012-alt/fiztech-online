@@ -1,7 +1,9 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
   // Keep desktop navigation in sync with the section being read.
-  const headerLinks=Array.from(document.querySelectorAll(".header-navigation a"));
+  const headerLinks=Array.from(document.querySelectorAll(".header-navigation a")).filter(function(link){
+    return link.pathname===window.location.pathname&&link.hash;
+  });
   if("IntersectionObserver" in window){
     const sectionObserver=new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
