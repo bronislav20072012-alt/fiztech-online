@@ -168,3 +168,11 @@
 .planet.has-logo .planet-caption{position:absolute;bottom:18px;z-index:2}
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.hero-visual .planet-logo{transform:translateZ(40px)}}
 @media(prefers-reduced-motion:reduce){.planet-logo{transition:none}}
+
+
+/* Brand logo: show the uploaded full mark automatically, retain old mark until image exists */
+.logo .logo-full-image{display:none;width:auto;height:58px;max-width:min(260px,42vw);object-fit:contain}
+.logo.logo-image-loaded .logo-full-image{display:block}
+.logo.logo-image-loaded .logo-mark,.logo.logo-image-loaded .logo-text{display:none}
+@media(max-width:700px){.logo .logo-full-image{height:46px;max-width:45vw}}
+@media(max-width:420px){.logo .logo-full-image{height:38px;max-width:46vw}}
