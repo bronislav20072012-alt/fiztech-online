@@ -1048,3 +1048,9 @@ html{scroll-snap-type:none;scroll-padding-top:110px}
 .demo-open>.action-arrow{grid-column:3}
 .demo-launch .demo-launch-note{font-size:11px;line-height:1.7;color:#a5c8b2;margin-top:16px}
 @media(max-width:650px){.demo-launch{padding:24px}.demo-preview-list{gap:14px 10px}.demo-preview-list li{font-size:11px}}
+
+/* Keep the hero's text layers above the logo despite its internal 3D depth. */
+#top .hero-visual{isolation:isolate;transform-style:flat}
+#top .hero-visual .planet{z-index:1}
+#top .hero-visual .badge-orbit{z-index:2}
+#top .hero-visual .hero-satellites{z-index:3}
