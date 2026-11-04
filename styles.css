@@ -692,3 +692,8 @@ html{
 @media(prefers-reduced-motion:reduce){
   html{scroll-snap-type:none}
 }
+
+/* Direct contact address for inquiries and proposals. */
+.contact-mail{margin:18px 0 0;font-size:14px;line-height:1.6;color:#c7e9d3}
+.contact-mail a{color:var(--mint);font-weight:800;overflow-wrap:anywhere;border-bottom:1px solid #67b48b}
+.contact-mail a:hover,.contact-mail a:focus-visible{color:#fff;border-color:#fff}
