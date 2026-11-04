@@ -923,3 +923,38 @@ html{scroll-snap-type:y proximity;scroll-padding-top:80px}
   .site-header .site-dropdown:not([hidden]){animation:none}
   .site-header .menu-bars span{transition:none}
 }
+
+
+/* Mobile layout repair: prevent the inherited 44px hamburger from overflowing. */
+.site-header .head-inner{width:min(100% - 36px,1220px);min-width:0;gap:12px}
+.site-header .head-inner .menu-toggle{
+  flex:0 0 auto!important;
+  width:auto!important;min-width:109px;max-width:100%;
+  height:auto!important;min-height:45px;
+  margin-left:auto;padding:10px 13px!important;
+  display:inline-flex!important;
+  align-items:center;justify-content:center;
+  gap:10px;white-space:nowrap;
+  font-size:14px;line-height:1;
+  position:static;transform:none;
+}
+.site-header .head-inner .menu-bars{width:22px;height:19px;flex:0 0 22px}
+.site-header .head-inner .menu-toggle-label{display:inline-block;white-space:nowrap}
+.site-header .head-inner .logo{min-width:0;max-width:calc(100% - 125px);flex:0 1 auto}
+.site-header .head-inner .logo.logo-image-loaded{flex-shrink:1;min-width:0;max-width:calc(100% - 125px)}
+@media(max-width:420px){
+  .site-header .head-inner{gap:8px}
+  .site-header .head-inner .menu-toggle{min-width:94px;padding:9px 10px!important;gap:8px;font-size:13px}
+  .site-header .head-inner .menu-bars{width:19px;height:17px;flex-basis:19px}
+  .site-header .head-inner .logo{max-width:calc(100% - 102px)}
+  .site-header .head-inner .logo.logo-image-loaded{max-width:calc(100% - 102px)}
+}
+@media(max-width:650px){
+  /* Read vertically rather than snapping a long school page between sections. */
+  html{scroll-snap-type:none!important}
+  #main > section{scroll-snap-align:none;scroll-snap-stop:normal}
+  #ai.section{padding-bottom:34px}
+  #community.section{padding-top:44px}
+  #main > .section > .container{min-width:0}
+  #community h2{font-size:clamp(29px,8vw,36px);overflow-wrap:break-word}
+}
