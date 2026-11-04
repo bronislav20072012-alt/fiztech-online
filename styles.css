@@ -651,3 +651,29 @@
   .app-demo .demo-project-tile{padding:8px;gap:6px}
   .app-demo .demo-stage{font-size:8px;padding:3px 5px}
 }
+
+
+/* Magnetic chapter scrolling. Tall chapters remain freely readable. */
+html{
+  scroll-snap-type:y proximity;
+  scroll-padding-top:80px;
+}
+#main > section{
+  scroll-snap-align:start;
+  scroll-snap-stop:normal;
+}
+@media(min-width:921px){
+  #main > .section{
+    min-height:calc(100svh - 80px);
+    display:flex;
+    align-items:center;
+  }
+  #main > .section > .container{flex:0 0 auto}
+  #top.hero{min-height:max(675px,calc(100svh - 80px))}
+}
+@media(max-width:650px){
+  html{scroll-padding-top:65px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-snap-type:none}
+}
