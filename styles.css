@@ -36,5 +36,21 @@
   .mobile-nav:not([hidden]){grid-template-columns:1fr}
 }
 
-/* Сдвиг кнопки меню ☰ немного вправо на планшетах и телефонах */
-@media(max-width:1060px){.head-inner .menu-toggle{position:relative;left:9px;flex-shrink:0}}
+/* Адаптивная шапка: кнопка меню ровно по правому краю, без смещения за контейнер */
+@media(max-width:1060px){
+  .head-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .head-inner .logo{flex:0 1 auto;min-width:0}
+  .head-inner .menu-toggle{
+    display:flex;align-items:center;justify-content:center;
+    position:static;left:auto;transform:none;
+    margin-left:auto;flex:0 0 44px;width:44px;height:44px;
+    padding:0;border-radius:12px;line-height:1;
+    background:#153622;border:1px solid #3e7451;color:#e3ffef;
+    font-size:23px;
+  }
+  .head-inner .menu-toggle:hover{background:#205337;border-color:#7bdba6}
+}
+@media(max-width:440px){
+  .head-inner{gap:10px}
+  .head-inner .logo-text{font-size:19px}
+}
