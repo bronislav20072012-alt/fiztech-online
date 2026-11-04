@@ -429,6 +429,33 @@
   .satellite-community{--sat-y:143px}
 }
 
+
+/* Seven-day interactive student timetable */
+.demo-weekline .demo-day-button{
+  appearance:none;
+  display:grid;place-items:center;
+  min-width:0;
+  padding:8px 3px;
+  border:1px solid #275e3b;
+  border-radius:8px;
+  background:#133923;
+  color:#cae9d2;
+  font-size:10px;
+  font-weight:850;
+  line-height:1.4;
+  transition:background .2s,border-color .2s,transform .2s,color .2s;
+}
+.demo-weekline .demo-day-button:hover{border-color:#79eeb1;background:#235b3a;transform:translateY(-2px)}
+.demo-weekline .demo-day-button.is-day-active{
+  color:#072c19;
+  background:var(--mint);
+  border-color:var(--mint);
+  box-shadow:0 0 15px #82f7b42b;
+}
+.demo-weekline .demo-day-button:focus-visible{outline:2px solid #eafff1;outline-offset:3px}
+.demo-day-heading{font-size:11px;font-weight:850;letter-spacing:.03em;color:#b8f4d0;margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){.demo-weekline .demo-day-button{transition:none}}
+
 /* A richer, still demonstrative, student workspace. */
 .app-demo{box-shadow:0 22px 60px #0006,0 0 0 1px #4aff9f12}
 .demo-header .demo-pill{border-radius:999px;padding:6px 10px;background:#225f3b;border:1px solid #5dc486;color:#d4ffdf;font-size:10px}
