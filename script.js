@@ -53,6 +53,21 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
 
+  // Demonstration only: toggle daily tasks and update the sample completion ring.
+  const demoTasks=Array.from(document.querySelectorAll("[data-demo-task]"));
+  const demoDial=document.getElementById("demo-dial");
+  const demoProgressNumber=document.getElementById("demo-progress-number");
+  if(demoTasks.length&&demoDial&&demoProgressNumber){
+    function updateDemoDay(){
+      const done=demoTasks.filter(function(task){return task.checked;}).length;
+      const percent=Math.round(done/demoTasks.length*100);
+      demoDial.style.setProperty("--percent",String(percent));
+      demoProgressNumber.textContent=percent+"%";
+    }
+    demoTasks.forEach(function(task){task.addEventListener("change",updateDemoDay);});
+    updateDemoDay();
+  }
+
   // Gallery of school events (not a test).
   const eventTabs=Array.from(document.querySelectorAll("[data-event-tab]"));
   const eventPanels=Array.from(document.querySelectorAll("[data-event-panel]"));
