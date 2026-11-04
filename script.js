@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded",function(){
       return window.scrollY<Math.min(180,window.innerHeight*.3)&&heroBottom>window.innerHeight*.45;
     }
     function runChapterTransition(){
-      if(transitioning||performance.now()-lastTransitionAt<1400||!nearFirstScreen())return false;
+      if(transitioning||performance.now()-lastTransitionAt<2300||!nearFirstScreen())return false;
       transitioning=true;
       lastTransitionAt=performance.now();
       chapterOverlay.classList.remove("is-exiting");
@@ -25,12 +25,12 @@ document.addEventListener("DOMContentLoaded",function(){
         const headingOffset=secondChapter.getBoundingClientRect().top+window.scrollY-85;
         window.scrollTo({top:headingOffset,behavior:"smooth"});
         chapterOverlay.classList.add("is-exiting");
-      },800);
+      },1450);
       window.setTimeout(function(){
         chapterOverlay.classList.remove("is-active","is-exiting");
         document.documentElement.classList.remove("chapter-transition-running");
         transitioning=false;
-      },1450);
+      },2350);
       return true;
     }
     window.addEventListener("wheel",function(event){
