@@ -292,11 +292,11 @@ document.addEventListener("DOMContentLoaded",function(){
   const bottomHeroLabel=document.getElementById("hero-label-bottom");
   if(topHeroLabel&&bottomHeroLabel){
     const phrases=[
-      ["✦ ИИ + наставник","↗ Идея → проект"],
-      ["✦ Среда развития","↗ Интерес → навык"],
-      ["✦ Меценатство","↗ Возможность → успех"],
-      ["✦ Сильное сообщество","↗ Команда → результат"],
-      ["✦ Проекты и практика","↗ Знания → действие"]
+      ["✦ ИИ + наставник","Идея → проект"],
+      ["✦ Среда развития","Интерес → навык"],
+      ["✦ Меценатство","Возможность → успех"],
+      ["✦ Сильное сообщество","Команда → результат"],
+      ["✦ Проекты и практика","Знания → действие"]
     ];
     const labels=[topHeroLabel,bottomHeroLabel];
     const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -320,7 +320,11 @@ document.addEventListener("DOMContentLoaded",function(){
     const motionOff=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const heroVisual=document.querySelector(".hero-visual");
     function orbitRadius(){
-      return window.innerWidth<=440?116:window.innerWidth<=760?150:195;
+      const preferred=window.innerWidth<=440?116:window.innerWidth<=760?150:195;
+      const halfLabel=window.innerWidth<=440?58:window.innerWidth<=760?72.5:95;
+      const bounds=heroVisual.getBoundingClientRect();
+      const center=bounds.left+bounds.width/2;
+      return Math.max(0,Math.min(preferred,center-halfLabel-4,window.innerWidth-center-halfLabel-4));
     }
     function placeOrbit(angle){
       const radius=orbitRadius();
