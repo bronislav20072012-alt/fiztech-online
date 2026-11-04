@@ -176,3 +176,19 @@
 .logo.logo-image-loaded .logo-mark,.logo.logo-image-loaded .logo-text{display:none}
 @media(max-width:700px){.logo .logo-full-image{height:46px;max-width:45vw}}
 @media(max-width:420px){.logo .logo-full-image{height:38px;max-width:46vw}}
+
+
+/* Crop empty margins from the original full logo image in the header. */
+.logo.logo-image-loaded{position:relative;width:240px;height:72px;flex:0 0 240px;overflow:hidden;isolation:isolate}
+.logo.logo-image-loaded .logo-full-image{
+  display:block;position:absolute;width:320px;height:auto;max-width:none;max-height:none;
+  left:-38px;top:-50px;object-fit:initial;mix-blend-mode:screen;
+}
+@media(max-width:700px){
+  .logo.logo-image-loaded{width:170px;height:53px;flex:0 0 170px}
+  .logo.logo-image-loaded .logo-full-image{width:225px;height:auto;left:-27px;top:-35px;max-width:none}
+}
+@media(max-width:420px){
+  .logo.logo-image-loaded{width:150px;height:48px;flex:0 0 150px}
+  .logo.logo-image-loaded .logo-full-image{width:200px;height:auto;left:-24px;top:-31px;max-width:none}
+}
