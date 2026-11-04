@@ -119,10 +119,43 @@ document.addEventListener("DOMContentLoaded",function(){
     });
   }
 
-  if("IntersectionObserver" in window&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  // Progressive-enhancement animations. Content stays visible if JS is disabled.
+  const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduceMotion&&"IntersectionObserver" in window){
+    document.querySelectorAll(".feature-grid .card,.tracks-grid .card,.mentor-grid .card,.project-grid .card,.patron-directions .card,.donor-grid .card,.roadmap-grid article,.event-showcase,.faq-list details").forEach(function(element){
+      element.classList.add("reveal");
+    });
     const observer=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}});
-    },{threshold:0.05});
-    document.querySelectorAll(".reveal").forEach(function(el){observer.observe(el);});
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}
+      });
+    },{threshold:0.04,rootMargin:"0px 0px -20px 0px"});
+    document.querySelectorAll(".reveal").forEach(function(element){
+      if(element.getBoundingClientRect().top<window.innerHeight*0.85){element.classList.add("visible");}
+      else{observer.observe(element);}
+    });
+    document.documentElement.classList.add("js-motion");
+  }
+
+  // Gentle hero parallax for mouse/trackpad only.
+  const hero=document.querySelector(".hero");
+  const planet=document.querySelector(".planet");
+  if(hero&&planet&&!reduceMotion&&window.matchMedia("(hover: hover) and (pointer: fine)").matches){
+    let frame=0;
+    hero.addEventListener("pointermove",function(event){
+      if(frame)return;
+      const rect=hero.getBoundingClientRect();
+      const x=((event.clientX-rect.left)/rect.width-.5)*14;
+      const y=((event.clientY-rect.top)/rect.height-.5)*14;
+      frame=requestAnimationFrame(function(){
+        planet.style.setProperty("--tilt-x",x.toFixed(1)+"px");
+        planet.style.setProperty("--tilt-y",y.toFixed(1)+"px");
+        frame=0;
+      });
+    },{passive:true});
+    hero.addEventListener("pointerleave",function(){
+      planet.style.setProperty("--tilt-x","0px");
+      planet.style.setProperty("--tilt-y","0px");
+    });
   }
 });
