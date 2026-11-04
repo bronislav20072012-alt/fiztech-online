@@ -1058,3 +1058,113 @@ body.ft-secret-open{overflow:hidden}
   .ft-secret-ray{transform:rotate(var(--ray));opacity:.2}
   .ft-secret-point span{transition:none}
 }
+
+
+/* Telegram secret reveal V2: reliable visible preview and cinematic flight. */
+.ft-secret-word{
+  -webkit-appearance:none;appearance:none;
+  display:inline;position:relative;
+  margin:0;padding:0;border:0;border-radius:0;
+  background:transparent;box-shadow:none;
+  color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;
+  line-height:inherit;letter-spacing:inherit;text-align:inherit;
+  cursor:pointer;vertical-align:baseline;-webkit-tap-highlight-color:transparent;
+}
+.ft-secret-word::after{
+  content:"";position:absolute;inset:-5px -7px;
+  border-radius:8px;pointer-events:none;
+  opacity:0;box-shadow:0 0 0 2px #88ffbe,0 0 27px 5px #41ff9e8f;
+  transition:opacity .2s ease;
+}
+.ft-secret-word.is-hit::after,.ft-secret-word:focus-visible::after{opacity:1}
+.ft-secret-word:focus-visible{outline:2px dashed #84ffc4;outline-offset:5px}
+.ft-secret-phrase{color:inherit}
+.ft-secret-preview{
+  display:inline-flex;align-items:center;gap:9px;
+  appearance:none;-webkit-appearance:none;
+  padding:10px 13px;min-height:44px;
+  border:1px solid #4d966c;border-radius:12px;
+  color:#b9fbd6;background:#0c2d1c;
+  font:800 12px/1.3 var(--font);
+  cursor:pointer;white-space:nowrap;
+  box-shadow:inset 0 1px 0 #99ffcc12;
+  transition:border-color .18s,background-color .18s,transform .18s;
+}
+.ft-secret-preview:hover,.ft-secret-preview:focus-visible{
+  background:#174832;border-color:#9affc9;transform:translateY(-2px);
+}
+.ft-secret-preview-icon{
+  display:grid;place-items:center;
+  width:25px;height:25px;border-radius:50%;
+  background:linear-gradient(135deg,#2abdf2,#1784bb);
+  color:#fff;font-size:14px;line-height:1;
+}
+.ft-secret-preview:hover .ft-secret-preview-icon{animation:ft-telegram-preview-flight .62s ease-in-out}
+@keyframes ft-telegram-preview-flight{
+  0%,100%{transform:translate(0,0) rotate(0)}
+  45%{transform:translate(5px,-7px) rotate(-22deg)}
+  75%{transform:translate(7px,-4px) rotate(-12deg)}
+}
+.ft-telegram-flyer{
+  position:absolute;left:50%;top:50%;z-index:6;
+  display:grid;place-items:center;
+  width:clamp(80px,11vw,130px);aspect-ratio:1;
+  border:2px solid #d4f6ff;border-radius:50%;
+  background:radial-gradient(circle at 32% 23%,#72e6ff,#2eace1 62%,#0575b6);
+  color:white;
+  box-shadow:0 0 80px #2fbfff8a,0 0 10px #fff8,inset 0 0 25px #ffffff5c;
+  pointer-events:none;
+  animation:ft-telegram-flyout 1.7s cubic-bezier(.23,.65,.34,1) both;
+}
+.ft-telegram-flyer svg{
+  display:block;width:65%;height:65%;
+  transform:translate(-1px,1px) rotate(-12deg);
+  filter:drop-shadow(0 5px 5px #03558c99);
+}
+.ft-telegram-flyer::before,.ft-telegram-flyer::after{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  height:5px;border-radius:999px;
+  background:linear-gradient(90deg,transparent,#4bcaffbd,#edffff);
+  box-shadow:0 0 18px 4px #33c0ff8c;
+}
+.ft-telegram-flyer::before{right:85%;top:62%;width:clamp(120px,19vw,300px);transform:rotate(-22deg)}
+.ft-telegram-flyer::after{right:88%;top:76%;width:clamp(55px,11vw,150px);transform:rotate(-15deg);opacity:.65}
+@keyframes ft-telegram-flyout{
+  0%{opacity:0;transform:translate(-50%,-50%) translate3d(-35vw,33vh,0) rotate(-35deg) scale(.24)}
+  15%{opacity:1}
+  42%{opacity:1;transform:translate(-50%,-50%) translate3d(-5vw,4vh,0) rotate(0deg) scale(1.28)}
+  62%{opacity:1;transform:translate(-50%,-50%) translate3d(7vw,-4vh,0) rotate(14deg) scale(1.18)}
+  100%{opacity:0;transform:translate(-50%,-50%) translate3d(48vw,-45vh,0) rotate(29deg) scale(.45)}
+}
+.ft-secret-reveal .ft-secret-content{
+  animation-delay:.58s;
+}
+.ft-secret-reveal .ft-secret-orbit{
+  animation-delay:.45s;
+}
+.ft-secret-actions{
+  display:flex;justify-content:center;align-items:center;gap:12px;
+  flex-wrap:wrap;margin-top:24px;
+}
+.ft-secret-telegram-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:13px 18px;
+  border-radius:13px;border:1px solid #7cdbf9;
+  background:linear-gradient(130deg,#3abdf1,#147eb8);
+  color:#fff;font:850 14px/1.3 var(--font);
+  text-decoration:none;box-shadow:0 8px 32px #24bcf64a;
+}
+.ft-secret-telegram-link:hover{background:#46c7fc;color:#fff}
+.ft-secret-telegram-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(max-width:650px){
+  .ft-secret-preview{padding:9px 11px;font-size:11px;min-height:42px}
+  .ft-secret-preview-icon{width:22px;height:22px}
+  .ft-telegram-flyer{width:90px}
+  .ft-secret-actions{flex-direction:column;gap:10px}
+  .ft-secret-actions>*{width:min(100%,310px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .ft-telegram-flyer{animation:none!important;display:none}
+  .ft-secret-preview:hover .ft-secret-preview-icon{animation:none}
+  .ft-secret-reveal .ft-secret-content,.ft-secret-reveal .ft-secret-orbit{animation-delay:0s}
+}
