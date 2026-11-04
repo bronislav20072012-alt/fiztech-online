@@ -137,6 +137,33 @@ document.addEventListener("DOMContentLoaded",function(){
     document.documentElement.classList.add("js-motion");
   }
 
+
+  // Two short hero messages rotate together every 1.5 seconds.
+  const topHeroLabel=document.getElementById("hero-label-top");
+  const bottomHeroLabel=document.getElementById("hero-label-bottom");
+  if(topHeroLabel&&bottomHeroLabel){
+    const phrases=[
+      ["✦ ИИ + наставник","↗ Идея → проект"],
+      ["✦ Среда развития","↗ Интерес → навык"],
+      ["✦ Меценатство","↗ Возможность → успех"],
+      ["✦ Сильное сообщество","↗ Команда → результат"],
+      ["✦ Проекты и практика","↗ Знания → действие"]
+    ];
+    const labels=[topHeroLabel,bottomHeroLabel];
+    const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let phraseIndex=0;
+    window.setInterval(function(){
+      const nextIndex=(phraseIndex+1)%phrases.length;
+      if(!reducedMotion){labels.forEach(function(label){label.classList.add("is-changing");});}
+      window.setTimeout(function(){
+        phraseIndex=nextIndex;
+        labels[0].textContent=phrases[phraseIndex][0];
+        labels[1].textContent=phrases[phraseIndex][1];
+        labels.forEach(function(label){label.classList.remove("is-changing");});
+      },reducedMotion?0:280);
+    },1500);
+  }
+
   // Interactive depth on desktop cards; small perspective angles preserve readability.
   if(!reduceMotion&&window.matchMedia("(hover:hover) and (pointer:fine)").matches){
     const cards=document.querySelectorAll(".project-grid .project-card,.feature-grid .card,.mentor-grid .card,.tracks-grid .card,.patron-directions .card,.donor-grid .card");
