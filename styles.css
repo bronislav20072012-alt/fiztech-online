@@ -697,3 +697,123 @@ html{
 .contact-mail{margin:18px 0 0;font-size:14px;line-height:1.6;color:#c7e9d3}
 .contact-mail a{color:var(--mint);font-weight:800;overflow-wrap:anywhere;border-bottom:1px solid #67b48b}
 .contact-mail a:hover,.contact-mail a:focus-visible{color:#fff;border-color:#fff}
+
+
+/* One consistent premium dark-green design for the inquiry form. */
+.contact-form{
+  --form-edge:#3d7957;
+  --form-field-bg:#0a2417;
+  display:grid;
+  gap:15px;
+  min-width:0;
+  padding:clamp(21px,2.8vw,34px);
+  border:1px solid #427d5b;
+  border-radius:22px;
+  background:linear-gradient(150deg,#143623 0%,#0d2619 55%,#0a1d13 100%);
+  box-shadow:0 25px 55px #0005,inset 0 1px 0 #baffd015;
+}
+.contact-form .contact-form-heading{margin-bottom:2px}
+.contact-form .contact-form-heading h3{
+  font-size:clamp(21px,2vw,26px);
+  margin:0 0 7px;
+  color:#f4fff8;
+  letter-spacing:-.03em;
+}
+.contact-form .contact-form-heading p{
+  color:#adcbb8;
+  font-size:12px;
+  line-height:1.55;
+  margin:0;
+}
+.contact-form .form-field{display:grid;gap:7px;min-width:0}
+.contact-form .form-field>label{
+  font-size:12px;
+  line-height:1.4;
+  font-weight:800;
+  color:#e5faeb;
+}
+.contact-form .form-field :is(input,select,textarea){
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  padding:12px 15px;
+  border:1px solid var(--form-edge);
+  border-radius:12px;
+  background:var(--form-field-bg);
+  background-image:none;
+  box-shadow:inset 0 2px 5px #0003,0 1px 0 #c2ffd009;
+  color:#effff5;
+  font:500 14px/1.45 var(--font);
+  transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+.contact-form .form-field :is(input,select){height:49px}
+.contact-form .form-field textarea{min-height:95px;resize:vertical}
+.contact-form .form-field :is(input,select,textarea):focus{
+  outline:none;
+  border-color:#90f6bb;
+  background-color:#103421;
+  box-shadow:0 0 0 3px #66f5aa28,inset 0 2px 5px #0002;
+}
+.contact-form .form-field :is(input,textarea)::placeholder{color:#8cae99;opacity:1}
+.contact-form .form-select-shell{position:relative;min-width:0}
+.contact-form .form-select-shell select{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  padding-right:48px;
+  cursor:pointer;
+  color-scheme:dark;
+  background-color:var(--form-field-bg)!important;
+  background-image:none!important;
+}
+.contact-form .form-select-shell select:focus{background-color:#103421!important}
+.contact-form .form-select-shell select::-ms-expand{display:none}
+.contact-form .form-select-shell::after{
+  content:"";
+  position:absolute;
+  top:50%;right:20px;
+  width:9px;height:9px;
+  border-right:2px solid #8cebb6;
+  border-bottom:2px solid #8cebb6;
+  transform:translateY(-72%) rotate(45deg);
+  transition:transform .2s ease,border-color .2s ease;
+  pointer-events:none;
+}
+.contact-form .form-select-shell:focus-within::after{
+  border-color:#bdffdb;
+  transform:translateY(-42%) rotate(225deg);
+}
+.contact-form select option{background:#0e2b1b;color:#effff5}
+.contact-form .contact-submit{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;min-height:53px;margin-top:4px;
+  padding:13px 19px;
+  border:1px solid #b4ffcf;border-radius:12px;
+  color:#052719;background:linear-gradient(115deg,#a8ffcf,#69e7a7);
+  box-shadow:0 10px 26px #22d77c27;
+  font-size:14px;font-weight:850;
+  transition:filter .2s,transform .2s,box-shadow .2s;
+}
+.contact-form .contact-submit:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 14px 30px #26f29230}
+.contact-form .contact-submit span{font-size:18px}
+.contact-form .contact-form-note{font-size:10px;line-height:1.55;margin:-4px 0 0;color:#9cbea9}
+.contact-form .interest-result{margin:0;background:#143d28;border:1px solid #4f9068}
+.contact-form .interest-result pre{color:#d6f8e4}
+.contact-form .form-status{font-size:11px;line-height:1.6;margin:0;color:#b9e9ce}
+.contact-form .form-status:empty{display:none}
+@media(max-width:650px){
+  .contact-form{padding:20px;gap:13px;border-radius:17px}
+  .contact-form .form-field :is(input,select,textarea){font-size:16px}
+  .contact-form .form-field :is(input,select){height:49px}
+}
+@media(prefers-reduced-motion:reduce){
+  .contact-form .form-field :is(input,select,textarea),
+  .contact-form .form-select-shell::after,
+  .contact-form .contact-submit{transition:none!important;transform:none}
+  .contact-form .form-select-shell::after{transform:translateY(-72%) rotate(45deg)}
+}
