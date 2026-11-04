@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded",function(){
   const secretStatus=document.getElementById("ft-secret-status");
   const secretDismiss=document.getElementById("ft-secret-dismiss");
   const secretReturn=document.getElementById("ft-secret-return");
+  const secretPreview=document.getElementById("ft-secret-preview");
   if(secretPoints.length===4&&secretReveal&&secretDismiss&&secretReturn){
     let expectedPoint=1;
     let previousTapAt=0;
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded",function(){
         if(secretIsOpen)return;
         flashPoint();
         const now=performance.now();
-        if(previousTapAt&&now-previousTapAt>6500)expectedPoint=1;
+        if(previousTapAt&&now-previousTapAt>15000)expectedPoint=1;
         previousTapAt=now;
         if(pointNumber===expectedPoint){
           expectedPoint+=1;
@@ -123,6 +124,7 @@ document.addEventListener("DOMContentLoaded",function(){
     });
     secretDismiss.addEventListener("click",closeSecret);
     secretReturn.addEventListener("click",closeSecret);
+    if(secretPreview)secretPreview.addEventListener("click",openSecret);
     document.addEventListener("keydown",function(event){
       if(!secretIsOpen)return;
       if(event.key==="Escape"){
