@@ -1,5 +1,54 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
+  // Desktop: one wheel gesture aligns the next/previous short screen.
+  // Longer screens keep native scrolling so no text gets skipped.
+  const chapters=Array.from(document.querySelectorAll("#main > section"));
+  const guidedScroll=window.matchMedia("(min-width: 921px) and (prefers-reduced-motion: no-preference)");
+  if(chapters.length>1){
+    let scrollLockUntil=0;
+    function stickyHeight(){
+      const header=document.querySelector(".site-header");
+      return header?header.getBoundingClientRect().height:80;
+    }
+    function activeChapter(){
+      const line=window.scrollY+stickyHeight()+65;
+      let index=0;
+      chapters.forEach(function(chapter,i){
+        if(chapter.offsetTop<=line)index=i;
+      });
+      return index;
+    }
+    function scrollChapter(index){
+      const destination=Math.max(0,chapters[index].getBoundingClientRect().top+window.scrollY-stickyHeight());
+      scrollLockUntil=performance.now()+720;
+      window.scrollTo({top:destination,behavior:"smooth"});
+    }
+    window.addEventListener("wheel",function(event){
+      if(!guidedScroll.matches||event.ctrlKey||event.defaultPrevented||Math.abs(event.deltaY)<9)return;
+      const target=event.target instanceof Element?event.target:null;
+      // Never capture gestures within independent scroll containers or controls.
+      if(target&&target.closest(".demo-view,textarea,select,input,[contenteditable],.mobile-nav"))return;
+      if(performance.now()<scrollLockUntil){event.preventDefault();return;}
+      const direction=event.deltaY>0?1:-1;
+      const current=activeChapter();
+      const chapter=chapters[current];
+      const top=chapter.getBoundingClientRect().top+window.scrollY-stickyHeight();
+      const bottom=chapter.getBoundingClientRect().bottom+window.scrollY;
+      const viewportBottom=window.scrollY+window.innerHeight;
+      if(direction>0){
+        // If the chapter extends below the viewport, let the visitor read it first.
+        if(bottom>viewportBottom+36)return;
+        if(current>=chapters.length-1)return;
+        event.preventDefault();scrollChapter(current+1);
+      }else{
+        // On long chapters, scroll up normally until their top is reached.
+        if(window.scrollY>top+36)return;
+        if(current===0)return;
+        event.preventDefault();scrollChapter(current-1);
+      }
+    },{passive:false});
+  }
+
   const menuButton=document.querySelector(".menu-toggle");
   const menu=document.querySelector(".mobile-nav");
   if(menuButton&&menu){
