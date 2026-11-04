@@ -32,6 +32,16 @@ document.addEventListener("DOMContentLoaded",function(){
     });
   });
 
+  // Flip the three school direction cards; click, Enter and Space work on native buttons.
+  document.querySelectorAll(".track-flip").forEach(function(card){
+    const title=card.querySelector(".track-title")?.textContent||"Направление";
+    card.addEventListener("click",function(){
+      const expanded=card.getAttribute("aria-pressed")==="true";
+      card.setAttribute("aria-pressed",String(!expanded));
+      card.setAttribute("aria-label",title+(expanded?". Нажмите, чтобы узнать подробнее":". Описание открыто. Нажмите, чтобы вернуться"));
+    });
+  });
+
   const demoTabs=Array.from(document.querySelectorAll("[data-demo-tab]"));
   const demoPanels=Array.from(document.querySelectorAll("[data-demo-panel]"));
   demoTabs.forEach(function(tab,index){
