@@ -1,5 +1,62 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
+  // One deliberate screen-to-screen transition from the hero to "О школе".
+  // Other page sections retain normal scrolling and direct anchor navigation.
+  const chapterOverlay=document.getElementById("chapter-transition");
+  const firstChapter=document.getElementById("top");
+  const secondChapter=document.getElementById("about");
+  const reducedChapterMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(chapterOverlay&&firstChapter&&secondChapter&&!reducedChapterMotion){
+    let transitioning=false;
+    let lastTransitionAt=-10000;
+    function nearFirstScreen(){
+      const heroBottom=firstChapter.getBoundingClientRect().bottom;
+      return window.scrollY<Math.min(180,window.innerHeight*.3)&&heroBottom>window.innerHeight*.45;
+    }
+    function runChapterTransition(){
+      if(transitioning||performance.now()-lastTransitionAt<1400||!nearFirstScreen())return false;
+      transitioning=true;
+      lastTransitionAt=performance.now();
+      chapterOverlay.classList.remove("is-exiting");
+      chapterOverlay.classList.add("is-active");
+      chapterOverlay.setAttribute("aria-hidden","true");
+      document.documentElement.classList.add("chapter-transition-running");
+      window.setTimeout(function(){
+        const headingOffset=secondChapter.getBoundingClientRect().top+window.scrollY-85;
+        window.scrollTo({top:headingOffset,behavior:"smooth"});
+        chapterOverlay.classList.add("is-exiting");
+      },800);
+      window.setTimeout(function(){
+        chapterOverlay.classList.remove("is-active","is-exiting");
+        document.documentElement.classList.remove("chapter-transition-running");
+        transitioning=false;
+      },1450);
+      return true;
+    }
+    window.addEventListener("wheel",function(event){
+      if(transitioning){event.preventDefault();return;}
+      if(event.deltaY>8&&nearFirstScreen()){
+        if(runChapterTransition())event.preventDefault();
+      }
+    },{passive:false});
+    window.addEventListener("keydown",function(event){
+      if(event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||event.target.closest("input,textarea,select,button,a,[contenteditable]"))return;
+      if((event.key==="PageDown"||event.key==="ArrowDown"||event.key===" ")&&nearFirstScreen()){
+        if(runChapterTransition())event.preventDefault();
+      }
+    });
+    let touchStartY=null;
+    firstChapter.addEventListener("touchstart",function(e){
+      if(e.touches.length===1)touchStartY=e.touches[0].clientY;
+    },{passive:true});
+    firstChapter.addEventListener("touchend",function(e){
+      if(touchStartY===null||!e.changedTouches.length)return;
+      const distance=touchStartY-e.changedTouches[0].clientY;
+      touchStartY=null;
+      if(distance>55&&nearFirstScreen())runChapterTransition();
+    },{passive:true});
+  }
+
   const menuButton=document.querySelector(".menu-toggle");
   const menu=document.querySelector(".mobile-nav");
   if(menuButton&&menu){
