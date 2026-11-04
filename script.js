@@ -1,15 +1,29 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
   const menuButton=document.querySelector(".menu-toggle");
-  const menu=document.querySelector(".mobile-nav");
+  const menu=document.getElementById("mobile-navigation");
   if(menuButton&&menu){
+    function setMenuOpen(open){
+      menu.hidden=!open;
+      menuButton.setAttribute("aria-expanded",String(open));
+      menuButton.setAttribute("aria-label",open?"Закрыть меню":"Открыть меню");
+      menuButton.classList.toggle("is-open",open);
+    }
     menuButton.addEventListener("click",function(){
-      const opened=menuButton.getAttribute("aria-expanded")==="true";
-      menuButton.setAttribute("aria-expanded",String(!opened));
-      menu.hidden=opened;
-      menuButton.textContent=opened?"☰":"×";
+      setMenuOpen(menuButton.getAttribute("aria-expanded")!=="true");
     });
-    menu.querySelectorAll("a").forEach(function(link){link.addEventListener("click",function(){menu.hidden=true;menuButton.setAttribute("aria-expanded","false");menuButton.textContent="☰";});});
+    menu.querySelectorAll("a").forEach(function(link){
+      link.addEventListener("click",function(){setMenuOpen(false);});
+    });
+    document.addEventListener("pointerdown",function(event){
+      if(!menu.hidden&&!menu.contains(event.target)&&!menuButton.contains(event.target))setMenuOpen(false);
+    });
+    document.addEventListener("keydown",function(event){
+      if(event.key==="Escape"&&!menu.hidden){
+        setMenuOpen(false);
+        menuButton.focus();
+      }
+    });
   }
 
   function activateTab(buttons,panels,selection,tabAttr,panelAttr){
