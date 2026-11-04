@@ -294,14 +294,18 @@ document.addEventListener("DOMContentLoaded",function(){
       ].join("\n");
       interestPreview.textContent=generatedText;
       interestResult.hidden=false;
-      formStatus.textContent="Текст подготовлен. Он не отправлен организаторам и не сохранён на сервере.";
+      const recipient="phystechonline3@gmail.com";
+      const subject="Вопрос или предложение — Физтех Онлайн";
+      const emailUrl="mailto:"+recipient+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(generatedText);
+      formStatus.textContent="Откроется почтовое приложение с готовым письмом. Проверьте его и нажмите «Отправить». Если почта не открылась, скопируйте текст и напишите на "+recipient+".";
+      window.location.href=emailUrl;
     });
   }
   const copyButton=document.getElementById("copy-interest");
   if(copyButton&&formStatus){
     copyButton.addEventListener("click",async function(){
       if(!generatedText)return;
-      try{await navigator.clipboard.writeText(generatedText);formStatus.textContent="Текст скопирован. Для отправки потребуется контакт организаторов проекта.";}
+      try{await navigator.clipboard.writeText(generatedText);formStatus.textContent="Текст скопирован. Отправьте его на phystechonline3@gmail.com.";}
       catch(e){formStatus.textContent="Выдели текст обращения и скопируй его вручную.";}
     });
   }
