@@ -249,3 +249,17 @@
   }
 }
 @media(max-width:700px){.planet.has-logo .planet-logo{inset:auto;top:50%;left:50%;width:90%;height:75%}}
+
+
+/* Seven-screen school homepage */
+.compact-method{margin-top:28px;padding:23px 27px;border:1px solid #3c7856;border-radius:16px;background:linear-gradient(110deg,#133b26,#0b2116)}
+.compact-method h3{font-size:23px;margin:8px 0}
+.compact-method p{margin:0;max-width:850px}
+.learning-highlights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:38px}
+.learning-highlights .card{padding:24px}
+.learning-highlights .card h3{margin-top:8px}
+.learning-highlights .card p{margin-bottom:0}
+#about.section,#programs.section,#ai.section,#community.section,#join.section,#partners.section{padding-top:clamp(58px,7vw,96px);padding-bottom:clamp(58px,7vw,96px)}
+#ai .ai-grid{margin-top:0}
+#partners .patron-subtitle{margin-top:28px}
+@media(max-width:760px){.learning-highlights{grid-template-columns:1fr;gap:10px}.compact-method{padding:19px}.compact-method h3{font-size:19px}}
