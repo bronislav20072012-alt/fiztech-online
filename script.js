@@ -42,6 +42,40 @@ document.addEventListener("DOMContentLoaded",function(){
     });
   });
 
+
+  // Gallery of school events (not a test).
+  const eventTabs=Array.from(document.querySelectorAll("[data-event-tab]"));
+  const eventPanels=Array.from(document.querySelectorAll("[data-event-panel]"));
+  eventTabs.forEach(function(tab,index){
+    tab.addEventListener("click",function(){
+      activateTab(eventTabs,eventPanels,tab.dataset.eventTab,"data-event-tab","data-event-panel");
+    });
+    tab.addEventListener("keydown",function(e){
+      if(e.key!=="ArrowLeft"&&e.key!=="ArrowRight")return;
+      e.preventDefault();
+      const direction=e.key==="ArrowRight"?1:-1;
+      const next=eventTabs[(index+direction+eventTabs.length)%eventTabs.length];
+      next.focus();next.click();
+    });
+  });
+
+  // Lightweight progress indicator for long pages.
+  const progressBar=document.getElementById("reading-progress-bar");
+  if(progressBar){
+    let scheduled=false;
+    function updateReadingProgress(){
+      const maxScroll=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+      const percent=Math.max(0,Math.min(100,(window.scrollY/maxScroll)*100));
+      progressBar.style.width=percent.toFixed(2)+"%";
+      scheduled=false;
+    }
+    window.addEventListener("scroll",function(){
+      if(!scheduled){scheduled=true;requestAnimationFrame(updateReadingProgress);}
+    },{passive:true});
+    window.addEventListener("resize",updateReadingProgress,{passive:true});
+    updateReadingProgress();
+  }
+
   const aiForm=document.getElementById("demo-ai-form");
   const aiInput=document.getElementById("idea-input");
   const aiReply=document.getElementById("demo-reply");
