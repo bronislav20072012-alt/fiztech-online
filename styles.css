@@ -662,12 +662,27 @@ html{
   scroll-snap-align:start;
   scroll-snap-stop:normal;
 }
-@media(min-width:921px){
+@media(min-width:921px) and (min-height:700px){
+  /* Uniform presentation-sized screens; longer content scrolls INSIDE its screen. */
+  #main > section{height:calc(100svh - 80px);min-height:0}
   #main > .section{
-    min-height:calc(100svh - 80px);
     display:flex;
     align-items:center;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior-y:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#477658 transparent;
+    padding:clamp(24px,3.2vh,44px) 0;
   }
+  #main > .section > .container{flex:0 0 auto}
+  #top.hero{min-height:0}
+  #top.hero .hero-grid{height:100%;align-items:center}
+  #top.hero .hero-visual{height:min(545px,calc(100svh - 130px))}
+}
+@media(min-width:921px) and (max-height:699px){
+  /* Short displays must not hide essential content. */
+  #main > .section{min-height:calc(100svh - 80px);display:flex;align-items:center}
   #main > .section > .container{flex:0 0 auto}
   #top.hero{min-height:max(675px,calc(100svh - 80px))}
 }
