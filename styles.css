@@ -202,6 +202,20 @@
 .planet.has-logo .planet-caption{display:none}
 @media(max-width:700px){.planet.has-logo .planet-logo{inset:9%;width:82%;height:82%}}
 
-/* Vertically elongated hero monogram like the reference, without changing the 3D sphere */
-.planet.has-logo .planet-logo{transform:scaleY(1.22);transform-origin:center;}
-@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.hero-visual .planet.has-logo .planet-logo{transform:translateZ(40px) scaleY(1.22)}}
+/* Center the monogram optically and give it a taller, elongated silhouette. */
+.planet.has-logo .planet-logo{
+  inset:auto;
+  position:absolute;
+  left:50%;
+  top:45%;
+  width:77%;
+  height:82%;
+  object-fit:contain;
+  transform-origin:center center;
+  transform:translate(-50%,-50%) scaleY(1.48);
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .hero-visual .planet.has-logo .planet-logo{
+    transform:translate(-50%,-50%) translateZ(40px) scaleY(1.48);
+  }
+}
