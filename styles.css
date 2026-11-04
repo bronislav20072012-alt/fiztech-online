@@ -1036,3 +1036,15 @@ html{scroll-snap-type:none;scroll-padding-top:110px}
 .method-more>.action-arrow{grid-column:3}
 .method-more .action-arrow{width:22px;height:22px;flex-basis:22px}
 @media(max-width:650px){.method-more{padding:18px 20px;font-size:14px}}
+
+/* Launch the interactive classroom from a separate, spacious page. */
+.demo-launch{padding:32px;background:radial-gradient(ellipse at 100% 0%,#286b454a,transparent 70%),#102c1c;border-color:#487c5b}
+.demo-launch h3{font-size:clamp(24px,2.4vw,32px);line-height:1.25;margin:16px 0}
+.demo-preview-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:24px 0}
+.demo-preview-list li{display:flex;align-items:center;gap:10px;min-width:0;font-size:12px;font-weight:750;color:#dbf5e5}
+.demo-preview-list .brand-glyph{width:22px;height:22px;flex:none;color:var(--mint)}
+.demo-open{display:grid;grid-template-columns:20px minmax(0,1fr) 20px;gap:12px;width:100%;min-height:58px;margin-top:8px;text-align:center;white-space:normal}
+.demo-open>span{grid-column:2}
+.demo-open>.action-arrow{grid-column:3}
+.demo-launch .demo-launch-note{font-size:11px;line-height:1.7;color:#a5c8b2;margin-top:16px}
+@media(max-width:650px){.demo-launch{padding:24px}.demo-preview-list{gap:14px 10px}.demo-preview-list li{font-size:11px}}

@@ -1,0 +1,79 @@
+.demo-main{max-width:1040px;padding-block:28px 64px}
+.demo-back{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:10px 4px;margin-bottom:28px;font-size:20px;font-weight:700;color:#b6d2c1;border-radius:6px}
+.demo-back svg{width:24px;height:24px;flex:none}
+.demo-back:hover{color:var(--mint)}
+.demo-page-intro{max-width:760px;margin-bottom:30px}
+.demo-page-intro h1{font-size:clamp(38px,4.7vw,62px);line-height:1.12;margin:18px 0 22px}
+.demo-page-intro p{font-size:15px;line-height:1.9}
+.demo-page .app-demo{width:100%;align-self:stretch;padding:0}
+.demo-page .app-demo .demo-header{padding:22px 28px;font-size:17px}
+.demo-page .app-demo .demo-pill{font-size:12px;padding:7px 12px}
+.demo-page .app-demo .demo-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:16px 24px}
+.demo-page .app-demo .demo-tabs button{font-size:15px;min-height:50px;padding:12px;line-height:1.4}
+.demo-page .app-demo .demo-view{height:auto;min-height:490px;overflow:visible;overscroll-behavior:auto;padding:30px}
+.demo-page .app-demo .demo-welcome h3,.demo-page .app-demo .demo-project-heading h3,.demo-page #demo-ai h3,.demo-page #demo-passport>h3{font-size:26px;line-height:1.3}
+.demo-page .app-demo .demo-welcome p,.demo-page .app-demo .demo-project-heading p{font-size:14px;line-height:1.7}
+.demo-page .app-demo .demo-welcome .mini-label{font-size:10px}
+.demo-page .app-demo .demo-progress-dial{width:96px;height:96px;flex-basis:96px}
+.demo-page .app-demo .demo-progress-dial strong{font-size:27px}
+.demo-page .app-demo .demo-progress-dial small{font-size:12px}
+.demo-page .app-demo .demo-weekline{margin:24px 0 12px;gap:8px}
+.demo-page .app-demo .demo-day-button{min-height:44px;font-size:13px}
+.demo-page .app-demo .demo-day-heading{font-size:16px;margin-bottom:12px}
+.demo-page .app-demo .demo-create-plan{min-height:56px;padding:14px 18px;margin:10px 0 16px;font-size:15px;gap:14px}
+.demo-page .app-demo .demo-task-list{gap:10px}
+.demo-page .app-demo .demo-check-task{min-height:84px;padding:16px;gap:16px}
+.demo-page .app-demo .demo-check-task>.demo-task-glyph{width:46px;height:46px;flex-basis:46px}
+.demo-page .app-demo .demo-check-task>span:nth-last-child(2){place-items:normal}
+.demo-page .app-demo .demo-check-task>span:nth-last-child(2) b{font-size:16px;line-height:1.4}
+.demo-page .app-demo .demo-check-task>span:nth-last-child(2) small{font-size:13px;line-height:1.55}
+.demo-page .app-demo .demo-check-task>.demo-task-check{width:26px;height:26px;flex-basis:26px;font-size:15px}
+.demo-page .app-demo .demo-disclaimer{font-size:12px!important;line-height:1.8;margin-top:18px}
+.demo-page .app-demo .demo-project-cards{gap:12px}
+.demo-page .app-demo .demo-project-tile{padding:18px;gap:16px;min-height:90px}
+.demo-page .app-demo .demo-project-tile .demo-tile-icon{width:48px;height:48px;flex-basis:48px}
+.demo-page .app-demo .demo-project-tile b{font-size:16px;line-height:1.4}
+.demo-page .app-demo .demo-project-tile small{font-size:13px;line-height:1.5}
+.demo-page .app-demo .demo-stage{font-size:11px}
+.demo-page #demo-ai-form input{font-size:16px;min-width:0}
+.demo-page #demo-ai-form button{width:48px;min-height:48px;flex:none;display:grid;place-items:center}
+.demo-page #demo-ai-form .action-arrow{width:22px;height:22px}
+.demo-page .app-demo .passport-grid strong{font-size:30px}
+.demo-page .app-demo .passport-grid span{font-size:13px}
+.demo-page-note{font-size:12px;line-height:1.85;max-width:760px;margin:22px 0 0;color:#a5c8b2}
+@media(max-width:650px){
+ .demo-main{padding-block:18px 44px}
+ .demo-back{font-size:18px;margin-bottom:24px}
+ .demo-page-intro h1{font-size:clamp(34px,10vw,44px)}
+ .demo-page .app-demo .demo-header{padding:16px;font-size:13px;flex-wrap:wrap}
+ .demo-page .app-demo .demo-pill{font-size:10px}
+ .demo-page .app-demo .demo-tabs{padding:10px;gap:6px}
+ .demo-page .app-demo .demo-tabs button{min-height:46px;font-size:12px;padding:10px 4px}
+ .demo-page .app-demo .demo-view{min-height:0;padding:18px}
+ .demo-page .app-demo .demo-welcome h3,.demo-page .app-demo .demo-project-heading h3,.demo-page #demo-ai h3,.demo-page #demo-passport>h3{font-size:22px}
+ .demo-page .app-demo .demo-welcome p{font-size:12px}
+ .demo-page .app-demo .demo-progress-dial{width:76px;height:76px;flex-basis:76px}
+ .demo-page .app-demo .demo-progress-dial strong{font-size:23px}
+ .demo-page .app-demo .demo-weekline{gap:4px;margin-top:20px}
+ .demo-page .app-demo .demo-day-button{min-height:40px;font-size:11px}
+ .demo-page .app-demo .demo-create-plan{font-size:13px;white-space:normal;text-align:left;padding:12px}
+ .demo-page .app-demo .demo-check-task{min-height:78px;padding:12px;gap:10px}
+ .demo-page .app-demo .demo-check-task>.demo-task-glyph{width:36px;height:36px;flex-basis:36px}
+ .demo-page .app-demo .demo-check-task>span:nth-last-child(2) b{font-size:14px}
+ .demo-page .app-demo .demo-check-task>span:nth-last-child(2) small{font-size:12px}
+ .demo-page .app-demo .demo-project-tile{padding:12px;gap:10px;flex-wrap:wrap}
+ .demo-page .app-demo .demo-project-tile b{font-size:14px}
+ .demo-page .app-demo .demo-project-tile small{font-size:12px}
+ .demo-page .app-demo .demo-project-tile .demo-tile-icon{width:36px;height:36px;flex-basis:36px}
+ .demo-page .app-demo .passport-grid span{font-size:11px}
+}
+@media(max-width:360px){
+ .demo-page .app-demo .demo-view{padding:14px}
+ .demo-page .app-demo .demo-progress-dial{width:62px;height:62px;flex-basis:62px}
+ .demo-page .app-demo .demo-welcome{gap:10px}
+ .demo-page .app-demo .demo-welcome h3{font-size:20px}
+ .demo-page .app-demo .demo-check-task{gap:8px}
+ .demo-page .app-demo .demo-check-task>.demo-task-glyph{width:30px;height:30px;flex-basis:30px}
+ .demo-page .app-demo .demo-weekline{gap:3px}
+ .demo-page .app-demo .demo-day-button{font-size:10px}
+}
