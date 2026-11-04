@@ -192,3 +192,12 @@
   .logo.logo-image-loaded{width:150px;height:48px;flex:0 0 150px}
   .logo.logo-image-loaded .logo-full-image{width:200px;height:auto;left:-24px;top:-31px;max-width:none}
 }
+
+
+/* Hero brand mark: crisp transparent symbol, with the existing 3D orbit and parallax unchanged. */
+.planet.has-logo .planet-logo{
+  inset:10%;width:80%;height:80%;object-fit:contain;border-radius:0;
+  filter:drop-shadow(0 14px 17px rgba(0,0,0,.35));
+}
+.planet.has-logo .planet-caption{display:none}
+@media(max-width:700px){.planet.has-logo .planet-logo{inset:9%;width:82%;height:82%}}
