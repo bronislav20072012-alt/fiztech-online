@@ -263,3 +263,24 @@
 #ai .ai-grid{margin-top:0}
 #partners .patron-subtitle{margin-top:28px}
 @media(max-width:760px){.learning-highlights{grid-template-columns:1fr;gap:10px}.compact-method{padding:19px}.compact-method h3{font-size:19px}}
+
+
+/* Smooth rotating hero messages; preserve the floating-card animation itself. */
+.floating-label .hero-label-text{
+  display:inline-block;
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .28s ease,transform .28s cubic-bezier(.22,.8,.3,1);
+  white-space:nowrap;
+}
+.floating-label .hero-label-text.is-changing{
+  opacity:0;
+  transform:translateY(-7px);
+}
+@media(max-width:550px){
+  .floating-label .hero-label-text{white-space:normal}
+  .floating-label{max-width:75vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .floating-label .hero-label-text{transition:none!important;transform:none!important}
+}
