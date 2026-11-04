@@ -958,3 +958,13 @@ html{scroll-snap-type:y proximity;scroll-padding-top:80px}
   #main > .section > .container{min-width:0}
   #community h2{font-size:clamp(29px,8vw,36px);overflow-wrap:break-word}
 }
+
+
+/* Mobile hero: reserve enough space below the orbit for the Community caption. */
+@media(max-width:650px){
+  #top .hero-visual{height:400px}
+  #top .hero-satellite.satellite-community{--sat-y:132px}
+  #top .hero-satellite.satellite-community .satellite-caption{
+    z-index:12;display:block;white-space:nowrap;
+  }
+}
