@@ -231,3 +231,21 @@
     height:74%;
   }
 }
+
+/* Matching header and hero logos. Slightly taller, centered, 3D effect retained. */
+.planet.has-logo .planet-logo{
+  inset:auto;
+  top:50%;left:50%;
+  width:88%;height:75%;
+  max-width:none;
+  object-fit:contain;object-position:center;
+  border-radius:0;
+  transform-origin:center;
+  transform:translate(-50%,-50%) scaleY(1.08);
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .hero-visual .planet.has-logo .planet-logo{
+    transform:translate(-50%,-50%) translateZ(40px) scaleY(1.08);
+  }
+}
+@media(max-width:700px){.planet.has-logo .planet-logo{inset:auto;top:50%;left:50%;width:90%;height:75%}}
