@@ -972,20 +972,11 @@ html{scroll-snap-type:y proximity;scroll-padding-top:80px}
 /* Clear navigation and a comfortable reading rhythm across screen sizes. */
 html{scroll-snap-type:none;scroll-padding-top:110px}
 #main > section{scroll-snap-align:none}
-.header-navigation{display:none}
 .hero-highlights{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;padding:0;margin:22px 0;color:#d5ecdf;font-size:12px;font-weight:650}
 .hero-highlights li{display:flex;align-items:center;gap:8px}
 .hero-highlights li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint);flex:none}
 #top .hero-buttons{margin-top:24px}
 .site-header .site-dropdown-group>a:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
-@media(min-width:1100px){
-  .header-navigation{display:flex;align-items:center;gap:25px;margin-left:auto}
-  .header-navigation>a{font-size:13px;font-weight:700;color:var(--muted);padding-block:12px;transition:color .18s}
-  .header-navigation>a:hover,.header-navigation>a[aria-current]{color:var(--mint)}
-  .header-navigation .header-contact{display:inline-flex;gap:14px;align-items:center;border:1px solid #4a8562;border-radius:10px;padding:10px 16px;color:var(--ink);background:#102c1c}
-  .header-navigation .header-contact:hover{background:#1a432c}
-  .site-header .head-inner .menu-toggle{margin-left:12px;min-width:100px}
-}
 @media(min-width:921px){
   #top.hero{min-height:0}
   #top.hero .hero-grid{min-height:700px;padding-block:24px}
@@ -1040,6 +1031,8 @@ html{scroll-snap-type:none;scroll-padding-top:110px}
 
 /* A compact introduction leads to the full methodology on its own page. */
 #about.methodology-section{scroll-margin-top:0}
-.method-more{display:flex;width:100%;min-height:64px;justify-content:space-between;gap:20px;margin-top:22px;padding:18px 26px;border-radius:14px;font-size:15px;white-space:normal;text-align:left}
+.method-more{display:grid;grid-template-columns:22px minmax(0,1fr) 22px;width:100%;min-height:64px;gap:20px;margin-top:22px;padding:18px 26px;border-radius:14px;font-size:15px;white-space:normal;text-align:center}
+.method-more>span{grid-column:2}
+.method-more>.action-arrow{grid-column:3}
 .method-more .action-arrow{width:22px;height:22px;flex-basis:22px}
 @media(max-width:650px){.method-more{padding:18px 20px;font-size:14px}}

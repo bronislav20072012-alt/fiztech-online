@@ -1,21 +1,5 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
-  // Keep desktop navigation in sync with the section being read.
-  const headerLinks=Array.from(document.querySelectorAll(".header-navigation a")).filter(function(link){
-    return link.pathname===window.location.pathname&&link.hash;
-  });
-  if("IntersectionObserver" in window){
-    const sectionObserver=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(!entry.isIntersecting)return;
-        headerLinks.forEach(function(link){
-          if(link.hash==="#"+entry.target.id)link.setAttribute("aria-current","location");
-          else link.removeAttribute("aria-current");
-        });
-      });
-    },{rootMargin:"-110px 0px -55% 0px",threshold:0});
-    document.querySelectorAll("#main > section[id]").forEach(function(section){sectionObserver.observe(section);});
-  }
   const menuButton=document.querySelector(".menu-toggle");
   const menu=document.getElementById("mobile-navigation");
   if(menuButton&&menu){

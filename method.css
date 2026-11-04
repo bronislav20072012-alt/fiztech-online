@@ -55,7 +55,8 @@
 .method-page .method-layout{padding-block:56px 88px}
 .method-reading-intro{border-bottom:1px solid #294b37;background:radial-gradient(ellipse at 90% 40%,#174b3238,transparent 65%)}
 .method-reading-head{padding-block:32px 52px}
-.method-back{display:inline-flex;gap:10px;align-items:center;font-size:12px;color:#b6d2c1;padding-block:10px;margin-bottom:34px}
+.method-back{display:inline-flex;gap:12px;align-items:center;min-height:48px;font-size:20px;font-weight:700;color:#b6d2c1;padding:10px 4px;margin-bottom:34px;border-radius:6px}
+.method-back svg{width:24px;height:24px;flex:none}
 .method-back:hover{color:var(--mint)}
 .method-reading-head h1{font-size:clamp(40px,5.2vw,68px);line-height:1.12;max-width:900px;margin:18px 0 22px}
 .method-reading-head>p{max-width:720px;font-size:15px;line-height:1.9}
@@ -63,7 +64,7 @@
 .method-reading-head>.method-reading-lead{font-size:21px;font-weight:750;color:var(--ink);letter-spacing:-.4px;margin-bottom:14px}
 @media(max-width:650px){
  .method-reading-head{padding-block:20px 30px}
- .method-back{margin-bottom:24px}
+ .method-back{margin-bottom:24px;font-size:18px}
  .method-reading-head h1{font-size:clamp(39px,11vw,52px)}
  .method-reading-head>.method-reading-lead{font-size:18px}
  .method-page .method-layout{padding-block:32px 56px}
