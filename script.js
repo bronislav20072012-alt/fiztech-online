@@ -53,19 +53,79 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
 
-  // Demonstration only: toggle daily tasks and update the sample completion ring.
-  const demoTasks=Array.from(document.querySelectorAll("[data-demo-task]"));
+  // Seven sample timetables in the Fiztekh OS demo; each weekday remembers its ticks locally.
+  const demoWeek={
+    mon:{name:"Понедельник",items:[["book","Математика","Повторить уравнения"],["chip","Информатика","Написать первую программу"],["mentor","План недели","Поставить три цели"]]},
+    tue:{name:"Вторник",items:[["flask","Физика","Провести небольшой эксперимент"],["book","Русский язык","Подготовить письменный ответ"],["bulb","Мой проект","Найти проблему для исследования"]]},
+    wed:{name:"Среда",items:[["book","Математика","Разобрать новую тему"],["bulb","Мой проект","Проверить три гипотезы"],["mentor","Наставник","Обсудить цели недели"]]},
+    thu:{name:"Четверг",items:[["chip","Технологии","Создать простой прототип"],["users","Командная встреча","Распределить задачи"],["book","Английский язык","Подготовить рассказ о проекте"]]},
+    fri:{name:"Пятница",items:[["rocket","Презентация идеи","Подготовить три слайда"],["target","Обратная связь","Показать идею наставнику"],["book","Повторение","Закрепить темы недели"]]},
+    sat:{name:"Суббота",items:[["compass","Исследование","Посетить музей или лабораторию"],["users","Клуб создателей","Обсудить идеи с друзьями"],["bulb","Личный проект","Улучшить прототип"]]},
+    sun:{name:"Воскресенье",items:[["book","Чтение","Прочитать интересную главу"],["heart","Время с семьёй","Поделиться открытиями недели"],["target","Планирование","Выбрать цель на понедельник"]]}
+  };
+  const demoWeekButtons=Array.from(document.querySelectorAll("[data-demo-day]"));
+  const demoTaskList=document.getElementById("demo-task-list");
+  const demoDayHeading=document.getElementById("demo-day-heading");
   const demoDial=document.getElementById("demo-dial");
   const demoProgressNumber=document.getElementById("demo-progress-number");
-  if(demoTasks.length&&demoDial&&demoProgressNumber){
-    function updateDemoDay(){
-      const done=demoTasks.filter(function(task){return task.checked;}).length;
-      const percent=Math.round(done/demoTasks.length*100);
+  if(demoWeekButtons.length&&demoTaskList&&demoDayHeading&&demoDial&&demoProgressNumber){
+    const completedByDay={wed:[true,false,false]};
+    let activeDemoDay="wed";
+    function updateDemoProgress(){
+      const completed=completedByDay[activeDemoDay]||[];
+      const count=completed.filter(Boolean).length;
+      const percent=Math.round(count/demoWeek[activeDemoDay].items.length*100);
       demoDial.style.setProperty("--percent",String(percent));
       demoProgressNumber.textContent=percent+"%";
     }
-    demoTasks.forEach(function(task){task.addEventListener("change",updateDemoDay);});
-    updateDemoDay();
+    function renderDemoDay(day){
+      if(!Object.prototype.hasOwnProperty.call(demoWeek,day))return;
+      activeDemoDay=day;
+      const dayData=demoWeek[day];
+      const completed=completedByDay[day]||(completedByDay[day]=dayData.items.map(function(){return false;}));
+      demoWeekButtons.forEach(function(button){
+        const active=button.dataset.demoDay===day;
+        button.classList.toggle("is-day-active",active);
+        button.setAttribute("aria-pressed",String(active));
+      });
+      demoDayHeading.textContent=dayData.name+" · учебный план";
+      demoTaskList.replaceChildren();
+      dayData.items.forEach(function(item,index){
+        const label=document.createElement("label");
+        label.className="demo-task demo-check-task";
+        const check=document.createElement("input");
+        check.type="checkbox";
+        check.checked=Boolean(completed[index]);
+        check.setAttribute("aria-label",item[1]+": "+item[2]);
+        check.addEventListener("change",function(){completed[index]=check.checked;updateDemoProgress();});
+        const glyph=document.createElement("span");
+        glyph.className="demo-task-glyph";
+        const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+        svg.setAttribute("class","brand-glyph");
+        svg.setAttribute("aria-hidden","true");
+        const use=document.createElementNS("http://www.w3.org/2000/svg","use");
+        use.setAttribute("href","#ico-"+item[0]);
+        svg.appendChild(use);
+        glyph.appendChild(svg);
+        const details=document.createElement("span");
+        const title=document.createElement("b");
+        title.textContent=item[1];
+        const desc=document.createElement("small");
+        desc.textContent=item[2];
+        details.append(title,desc);
+        const tick=document.createElement("span");
+        tick.className="demo-task-check";
+        tick.textContent="✓";
+        tick.setAttribute("aria-hidden","true");
+        label.append(check,glyph,details,tick);
+        demoTaskList.appendChild(label);
+      });
+      updateDemoProgress();
+    }
+    demoWeekButtons.forEach(function(button){
+      button.addEventListener("click",function(){renderDemoDay(button.dataset.demoDay);});
+    });
+    renderDemoDay(activeDemoDay);
   }
 
   // Gallery of school events (not a test).
