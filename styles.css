@@ -202,20 +202,32 @@
 .planet.has-logo .planet-caption{display:none}
 @media(max-width:700px){.planet.has-logo .planet-logo{inset:9%;width:82%;height:82%}}
 
-/* Center the monogram optically and give it a taller, elongated silhouette. */
+/* Balanced logo proportions inside the 3D sphere. Never distort the original artwork. */
 .planet.has-logo .planet-logo{
-  inset:auto;
   position:absolute;
+  inset:auto;
   left:50%;
-  top:45%;
-  width:77%;
-  height:82%;
+  top:50%;
+  width:72%;
+  height:72%;
+  max-width:none;
   object-fit:contain;
+  object-position:center;
   transform-origin:center center;
-  transform:translate(-50%,-50%) scaleY(1.48);
+  transform:translate(-50%,-50%);
+  border-radius:0;
 }
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   .hero-visual .planet.has-logo .planet-logo{
-    transform:translate(-50%,-50%) translateZ(40px) scaleY(1.48);
+    transform:translate(-50%,-50%) translateZ(40px);
+  }
+}
+@media(max-width:700px){
+  .planet.has-logo .planet-logo{
+    inset:auto;
+    left:50%;
+    top:50%;
+    width:74%;
+    height:74%;
   }
 }
