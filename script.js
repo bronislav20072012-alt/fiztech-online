@@ -137,6 +137,39 @@ document.addEventListener("DOMContentLoaded",function(){
     document.documentElement.classList.add("js-motion");
   }
 
+  // Interactive depth on desktop cards; small perspective angles preserve readability.
+  if(!reduceMotion&&window.matchMedia("(hover:hover) and (pointer:fine)").matches){
+    const cards=document.querySelectorAll(".project-grid .project-card,.feature-grid .card,.mentor-grid .card,.tracks-grid .card,.patron-directions .card,.donor-grid .card");
+    cards.forEach(function(card){
+      card.classList.add("tilt-3d");
+      let raf=0;
+      let pointerX=0,pointerY=0;
+      card.addEventListener("pointermove",function(e){
+        if(e.pointerType==="touch")return;
+        const rect=card.getBoundingClientRect();
+        pointerX=(e.clientX-rect.left)/rect.width;
+        pointerY=(e.clientY-rect.top)/rect.height;
+        if(raf)return;
+        raf=requestAnimationFrame(function(){
+          const x=Math.max(-1,Math.min(1,(pointerX-.5)*2));
+          const y=Math.max(-1,Math.min(1,(pointerY-.5)*2));
+          card.style.setProperty("--card-rx",(-y*6).toFixed(1)+"deg");
+          card.style.setProperty("--card-ry",(x*7).toFixed(1)+"deg");
+          card.style.setProperty("--card-lift","-4px");
+          card.style.setProperty("--shine-x",(pointerX*100).toFixed(1)+"%");
+          card.style.setProperty("--shine-y",(pointerY*100).toFixed(1)+"%");
+          raf=0;
+        });
+      },{passive:true});
+      card.addEventListener("pointerleave",function(){
+        if(raf){cancelAnimationFrame(raf);raf=0;}
+        card.style.setProperty("--card-rx","0deg");
+        card.style.setProperty("--card-ry","0deg");
+        card.style.setProperty("--card-lift","0px");
+      });
+    });
+  }
+
   // Gentle hero parallax for mouse/trackpad only.
   const hero=document.querySelector(".hero");
   const planet=document.querySelector(".planet");
@@ -150,12 +183,16 @@ document.addEventListener("DOMContentLoaded",function(){
       frame=requestAnimationFrame(function(){
         planet.style.setProperty("--tilt-x",x.toFixed(1)+"px");
         planet.style.setProperty("--tilt-y",y.toFixed(1)+"px");
+        planet.style.setProperty("--hero-rx",(-y*.65).toFixed(1)+"deg");
+        planet.style.setProperty("--hero-ry",(x*.85).toFixed(1)+"deg");
         frame=0;
       });
     },{passive:true});
     hero.addEventListener("pointerleave",function(){
       planet.style.setProperty("--tilt-x","0px");
       planet.style.setProperty("--tilt-y","0px");
+      planet.style.setProperty("--hero-rx","0deg");
+      planet.style.setProperty("--hero-ry","0deg");
     });
   }
 });
