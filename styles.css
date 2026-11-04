@@ -35,3 +35,6 @@
 @media(max-width:440px){
   .mobile-nav:not([hidden]){grid-template-columns:1fr}
 }
+
+/* Сдвиг кнопки меню ☰ немного вправо на планшетах и телефонах */
+@media(max-width:1060px){.head-inner .menu-toggle{position:relative;left:9px;flex-shrink:0}}
