@@ -103,7 +103,44 @@
 <div class="event-showcase" id="event-panel-team" role="tabpanel" aria-labelledby="event-tab-team" data-event-panel="team" hidden><div class="event-showcase-art team-art" aria-hidden="true"><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-users"></use></svg><span><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-heart"></use></svg></span></div><div class="event-showcase-copy"><span class="mini-label">ШКОЛЬНОЕ СООБЩЕСТВО</span><h3>Команда, в которой тебя понимают</h3><p>Совместные занятия, экскурсии, клубы по интересам и новые знакомства. Здесь учатся не только предметам, но и сотрудничеству.</p><a href="#ai" class="text-link">Познакомиться с подходом наставников ↗</a></div></div>
 <div class="event-showcase" id="event-panel-demo" role="tabpanel" aria-labelledby="event-tab-demo" data-event-panel="demo" hidden><div class="event-showcase-art demo-art" aria-hidden="true"><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-star"></use></svg><span><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-rocket"></use></svg></span></div><div class="event-showcase-copy"><span class="mini-label">ПРЕЗЕНТАЦИИ И ДОСТИЖЕНИЯ</span><h3>Сцена для больших идей</h3><p>Формат Demo Day: команды представляют проекты, объясняют решения, получают вопросы и обратную связь от экспертов.</p><a href="#about" class="text-link">Изучить «Путь создателя» ↗</a></div></div>
 <p class="footnote">Представлены направления школьных мероприятий. Конкретные даты и места уточняются по календарю.</p></div></section>
-<section class="section join-section" id="join"><div class="container join-grid"><div><h2>Будущее создают <span class="accent">те, кто действует.</span></h2><p>Узнайте больше о наших подходах к учёбе, наставничеству и проектам. Напишите нам, если у вас есть вопрос о программе, идея или предложение о сотрудничестве.</p><p class="footnote">После заполнения формы откроется ваше почтовое приложение с готовым письмом. Для отправки нажмите «Отправить» в почте. Это не заявление о зачислении.</p><p class="contact-mail">Почта для обращений: <a href="mailto:phystechonline3@gmail.com">phystechonline3@gmail.com</a></p></div><form class="interest-form card" id="interest-form"><h3>Вопросы и предложения</h3><label for="interest-name">Имя</label><input id="interest-name" name="name" required maxlength="100" placeholder="Как к вам обращаться?"><label for="interest-role">Кто вы?</label><select id="interest-role" name="role"><option>Родитель школьника</option><option>Школьник</option><option>Наставник / преподаватель</option><option>Меценат / партнёр</option></select><label for="interest-grade">Класс</label><select id="interest-grade" name="grade"><option>7 класс</option><option>8 класс</option><option>9 класс</option><option>10 класс</option><option>11 класс</option><option>Не относится</option></select><label for="interest-comment">Сообщение</label><textarea id="interest-comment" name="comment" rows="3" maxlength="1000" placeholder="Что вам интересно?"></textarea><button class="button full-width" type="submit">Написать на почту ↗</button><div id="interest-result" class="interest-result" hidden><pre id="interest-preview"></pre><button id="copy-interest" class="button button-outline" type="button">Скопировать текст</button></div><p class="form-status" id="form-status" role="status"></p></form></div></section>
+<section class="section join-section" id="join"><div class="container join-grid"><div><h2>Будущее создают <span class="accent">те, кто действует.</span></h2><p>Узнайте больше о наших подходах к учёбе, наставничеству и проектам. Напишите нам, если у вас есть вопрос о программе, идея или предложение о сотрудничестве.</p><p class="footnote">После заполнения формы откроется ваше почтовое приложение с готовым письмом. Для отправки нажмите «Отправить» в почте. Это не заявление о зачислении.</p><p class="contact-mail">Почта для обращений: <a href="mailto:phystechonline3@gmail.com">phystechonline3@gmail.com</a></p></div><form class="interest-form card contact-form" id="interest-form">
+<div class="contact-form-heading">
+<h3>Вопросы и предложения</h3>
+<p>Расскажите о себе и вашем вопросе — мы подготовим письмо на почту школы.</p>
+</div>
+<div class="form-field">
+<label for="interest-name">Ваше имя</label>
+<input id="interest-name" name="name" required maxlength="100" autocomplete="name" placeholder="Как к вам обращаться?">
+</div>
+<div class="form-field">
+<label for="interest-role">Кто вы?</label>
+<div class="form-select-shell"><select id="interest-role" name="role">
+<option>Родитель школьника</option>
+<option>Школьник</option>
+<option>Наставник / преподаватель</option>
+<option>Меценат / партнёр</option>
+</select></div>
+</div>
+<div class="form-field">
+<label for="interest-grade">Класс</label>
+<div class="form-select-shell"><select id="interest-grade" name="grade">
+<option>7 класс</option>
+<option>8 класс</option>
+<option>9 класс</option>
+<option>10 класс</option>
+<option>11 класс</option>
+<option>Не относится</option>
+</select></div>
+</div>
+<div class="form-field">
+<label for="interest-comment">Ваше сообщение</label>
+<textarea id="interest-comment" name="comment" rows="3" maxlength="1000" placeholder="Напишите ваш вопрос или предложение..."></textarea>
+</div>
+<button class="button full-width contact-submit" type="submit">Написать на почту <span aria-hidden="true">↗</span></button>
+<p class="contact-form-note">Откроется почтовое приложение с готовым письмом. Отправка только после вашего подтверждения.</p>
+<div id="interest-result" class="interest-result" hidden><pre id="interest-preview"></pre><button id="copy-interest" class="button button-outline" type="button">Скопировать текст</button></div>
+<p class="form-status" id="form-status" role="status"></p>
+</form></div></section>
 <section class="section section-dark" id="partners"><div class="container">
 
 <h2>Подарить ребёнку <span class="accent">возможность создавать.</span></h2>
