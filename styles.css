@@ -84,3 +84,43 @@
 @keyframes showcase-ring{to{transform:rotate(360deg)}}
 @media(max-width:700px){.event-showcase{grid-template-columns:1fr}.event-showcase-art{min-height:210px;font-size:90px}.event-showcase-art>span{font-size:48px}.event-showcase-copy{padding:25px}.event-switch button{padding:11px 12px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.reading-progress-bar,.event-showcase,.event-showcase-art:before,.event-showcase-art:after{animation:none!important;transition:none!important}}
+
+
+/* Motion system — subtle, GPU-friendly, respects reduced-motion preferences */
+@keyframes ft-orbit-glow{0%,100%{opacity:.45;transform:scale(.94)}50%{opacity:.78;transform:scale(1.08)}}
+@keyframes ft-shimmer{to{transform:translateX(230%) rotate(20deg)}}
+@keyframes ft-gradient-move{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes ft-spark{0%,100%{opacity:.16;transform:translateY(0) scale(.8)}50%{opacity:.72;transform:translateY(-17px) scale(1.14)}}
+@keyframes ft-page-in{from{opacity:.18;transform:translate3d(0,22px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@media(prefers-reduced-motion:no-preference){
+  .hero{isolation:isolate}
+  .hero::before,.hero::after{content:"";position:absolute;pointer-events:none;border-radius:50%;z-index:0}
+  .hero::before{height:15px;width:15px;left:12%;top:22%;background:#8affc1;box-shadow:0 0 19px #4ff1a2;animation:ft-spark 5.3s ease-in-out infinite}
+  .hero::after{height:10px;width:10px;left:55%;bottom:14%;background:#6cffb0;box-shadow:0 0 16px #4ff1a2;animation:ft-spark 7s ease-in-out -3s infinite}
+  .hero .halo{animation:ft-orbit-glow 8s ease-in-out infinite}
+  .planet{will-change:transform;transform:translate3d(var(--tilt-x,0px),var(--tilt-y,0px),0);transition:transform .32s ease-out}
+  .hero h1 em{background:linear-gradient(110deg,#62e6aa 10%,#d7ffe7 48%,#67ecb0 88%);background-size:240% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:ft-gradient-move 7s ease-in-out infinite}
+  .button{position:relative;overflow:hidden;isolation:isolate}
+  .button::after{content:"";pointer-events:none;position:absolute;top:-60%;bottom:-60%;left:-70%;width:28%;background:linear-gradient(90deg,transparent,#ffffff5e,transparent);transform:translateX(-120%) rotate(20deg)}
+  .button:hover::after{animation:ft-shimmer .68s ease-out both}
+  .desktop-nav a{position:relative;padding-bottom:3px}
+  .desktop-nav a::after{content:"";height:2px;background:#8cfac1;border-radius:2px;position:absolute;left:0;right:0;bottom:0;transform:scaleX(0);transform-origin:left;transition:transform .23s ease}
+  .desktop-nav a:hover::after,.desktop-nav a:focus-visible::after{transform:scaleX(1)}
+  .feature-icon,.project-card>span{transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+  .feature:hover .feature-icon,.project-card:hover>span{transform:translateY(-5px) rotate(-7deg) scale(1.1)}
+  .event-switch button[aria-selected=true],.tab-list button[aria-selected=true],.demo-tabs button[aria-selected=true]{box-shadow:0 0 0 2px #54dca32b,0 6px 24px #25ae7638;transition:box-shadow .25s,transform .25s}
+  .js-motion .reveal:not(.visible){opacity:0;transform:translate3d(0,24px,0)}
+  .js-motion .reveal{transition:opacity .65s ease,transform .65s ease}
+  .js-motion .reveal.visible{opacity:1;transform:translate3d(0,0,0)}
+  .js-motion .feature-grid .card.reveal:nth-child(2),.js-motion .mentor-grid .card.reveal:nth-child(2){transition-delay:.07s}
+  .js-motion .feature-grid .card.reveal:nth-child(3){transition-delay:.14s}
+  .js-motion .feature-grid .card.reveal:nth-child(4){transition-delay:.21s}
+  .js-motion .feature-grid .card.reveal:nth-child(5){transition-delay:.28s}
+  .js-motion .feature-grid .card.reveal:nth-child(6){transition-delay:.35s}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero::before,.hero::after,.hero .halo{animation:none!important}
+  .planet{transform:none!important;transition:none!important}
+  .hero h1 em{animation:none!important;background:none!important;color:var(--mint)!important}
+  .js-motion .reveal{opacity:1!important;transform:none!important;transition:none!important}
+}
