@@ -286,46 +286,31 @@
 }
 
 
-/* Two labels orbit around the center, counter-rotating to stay readable. */
-@keyframes hero-label-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes hero-label-upright{from{rotate:0deg}to{rotate:-360deg}}
+/* Circular orbit: move badge POSITION only. Never rotate the badge or its text. */
 .badge-orbit{
-  position:absolute;left:50%;top:50%;
+  position:absolute;
+  top:50%;left:50%;
   width:0;height:0;
-  pointer-events:none;
   z-index:5;
+  pointer-events:none;
+  transform:translate(185px,-65px);
 }
+.badge-orbit-two{transform:translate(-185px,65px)}
 .badge-orbit .floating-label{
   position:absolute;
-  top:0;left:var(--badge-orbit-radius,190px);
-  right:auto;bottom:auto;
-  width:max-content;max-width:195px;
-  text-align:center;
-  transform:translateY(-50%);
-  animation:none;
+  top:0;left:0;right:auto;bottom:auto;
+  transform:translate(-50%,-50%)!important;
+  rotate:none!important;
+  animation:none!important;
+  width:max-content;
+  max-width:190px;
   white-space:normal;
+  text-align:center;
   box-shadow:0 12px 35px #0008;
 }
-.badge-orbit-one{--badge-orbit-radius:195px}
-.badge-orbit-two{--badge-orbit-radius:195px}
-@media(prefers-reduced-motion:no-preference){
-  .badge-orbit-one{animation:hero-label-orbit 24s linear infinite}
-  .badge-orbit-two{animation:hero-label-orbit 24s linear -12s infinite}
-  .badge-orbit .floating-label{animation:hero-label-upright 24s linear infinite}
-  .badge-orbit-two .floating-label{animation-delay:-12s}
-}
 @media(max-width:760px){
-  .badge-orbit-one,.badge-orbit-two{--badge-orbit-radius:150px}
-  .badge-orbit .floating-label{padding:9px 12px;max-width:150px;font-size:10px}
+  .badge-orbit .floating-label{max-width:145px;padding:9px 12px;font-size:10px}
 }
 @media(max-width:440px){
-  .badge-orbit-one,.badge-orbit-two{--badge-orbit-radius:116px}
-  .badge-orbit .floating-label{max-width:115px;font-size:9px;padding:8px}
-}
-@media(prefers-reduced-motion:reduce){
-  .badge-orbit-one{transform:rotate(-55deg)}
-  .badge-orbit-two{transform:rotate(125deg)}
-  .badge-orbit .floating-label{animation:none!important}
-  .badge-orbit-one .floating-label{rotate:55deg}
-  .badge-orbit-two .floating-label{rotate:-125deg}
+  .badge-orbit .floating-label{max-width:116px;padding:8px;font-size:9px}
 }
