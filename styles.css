@@ -577,3 +577,77 @@
 @media(prefers-reduced-motion:reduce){
   .demo-create-plan,.passport-level-button,.passport-level-fill{transition:none!important;animation:none!important}
 }
+
+
+/* Equal-size compact Fiztekh OS views: switching tabs never changes card height. */
+.ai-grid > *{min-width:0}
+.app-demo{min-width:0;align-self:center}
+.app-demo .demo-view{
+  box-sizing:border-box;
+  height:485px;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#41865e transparent;
+  padding:20px 22px;
+}
+.app-demo .demo-view[hidden]{display:none!important}
+.app-demo .demo-tabs{gap:7px;padding:10px 14px}
+.app-demo .demo-tabs button{flex:1 1 auto;min-width:0;padding:9px 8px}
+.app-demo .demo-welcome h3{font-size:20px;margin:0 0 4px}
+.app-demo .demo-welcome p{font-size:11px;line-height:1.45}
+.app-demo .demo-welcome .mini-label{font-size:9px;margin-bottom:6px}
+.app-demo .demo-progress-dial{width:76px;height:76px;flex-basis:76px}
+.app-demo .demo-weekline{margin:12px 0 7px}
+.app-demo .demo-day-heading{margin:0 0 5px}
+.app-demo .demo-create-plan{margin:7px 0 9px;padding:10px 13px}
+.app-demo .demo-task-list{gap:6px}
+.app-demo .demo-task.demo-check-task{gap:11px;padding:9px 11px;min-height:60px}
+.app-demo .demo-task.demo-check-task > .demo-task-glyph{
+  width:37px;height:37px;flex:0 0 37px;
+  display:grid;place-items:center;
+}
+.app-demo .demo-task.demo-check-task > span:nth-last-child(2){
+  display:block;
+  width:auto;height:auto;
+  flex:1 1 auto;min-width:0;
+  padding:0;margin:0;
+  border:0;border-radius:0;
+  background:none;box-shadow:none;
+  font-size:inherit;
+  text-align:left;
+}
+.app-demo .demo-task.demo-check-task > span:nth-last-child(2) b{
+  font-size:12px;line-height:1.35;
+}
+.app-demo .demo-task.demo-check-task > span:nth-last-child(2) small{
+  font-size:10px;line-height:1.4;margin-top:2px;
+}
+.app-demo .demo-task.demo-check-task > .demo-task-check{
+  display:grid;place-items:center;flex:0 0 22px;
+  width:22px;height:22px;font-size:12px;
+}
+.app-demo .demo-disclaimer{line-height:1.5;margin-top:10px}
+.app-demo .demo-project-heading h3{font-size:20px}
+.app-demo .demo-project-heading p{line-height:1.5}
+.app-demo .demo-project-cards{gap:9px}
+.app-demo .demo-project-tile{padding:10px;gap:10px;min-height:68px}
+.app-demo .demo-project-tile .demo-tile-icon{flex:0 0 40px;width:40px;height:40px}
+.app-demo .passport-level-card{padding:16px;margin:12px 0 14px}
+.app-demo .passport-grid div{padding:12px}
+.app-demo .passport-grid strong{font-size:25px}
+.app-demo .passport-grid span{font-size:11px}
+@media(max-width:760px){
+  .app-demo .demo-view{height:475px;padding:16px}
+  .app-demo .demo-tabs{gap:5px;padding:9px}
+  .app-demo .demo-tabs button{font-size:11px;padding:9px 5px}
+}
+@media(max-width:390px){
+  .app-demo .demo-view{height:455px;padding:13px}
+  .app-demo .demo-weekline{gap:3px}
+  .app-demo .demo-day-button{font-size:9px;padding:7px 2px}
+  .app-demo .demo-task.demo-check-task{padding:8px;gap:7px}
+  .app-demo .demo-project-tile{padding:8px;gap:6px}
+  .app-demo .demo-stage{font-size:8px;padding:3px 5px}
+}
