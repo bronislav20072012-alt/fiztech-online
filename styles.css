@@ -368,3 +368,64 @@
   .track-flip[aria-pressed="true"] .track-front{display:none}
   .track-flip[aria-pressed="true"] .track-back{display:flex;transform:none}
 }
+
+
+/* Cinematic transition from the landing screen to "О школе" */
+.chapter-transition{
+  position:fixed;inset:0;z-index:90;overflow:hidden;
+  display:grid;place-items:center;
+  background:radial-gradient(ellipse at center,#123a26 0%,#06150d 52%,#020704 100%);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .23s ease,visibility 0s linear .23s;
+  perspective:900px;
+}
+.chapter-transition.is-active{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transition:opacity .23s ease,visibility 0s;
+}
+.chapter-transition.is-exiting{opacity:0;pointer-events:none}
+.chapter-transition-glow{
+  position:absolute;width:min(75vmin,650px);aspect-ratio:1;border-radius:50%;
+  background:#11d38338;filter:blur(80px);
+}
+.chapter-transition-ring{
+  position:absolute;width:min(75vmin,650px);aspect-ratio:1;border-radius:50%;
+  border:2px solid #81ffbd60;box-shadow:0 0 40px #05ca7a24;
+  transform:rotateX(64deg);
+}
+.chapter-transition-ring.ring-b{width:min(92vmin,790px);border-style:dashed;border-color:#73e9a640;transform:rotateY(63deg)}
+.chapter-transition-center{
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  text-align:center;gap:10px;transform-style:preserve-3d;
+  padding:24px;position:relative;
+}
+.chapter-transition-mark{
+  width:clamp(100px,19vmin,190px);height:clamp(100px,19vmin,190px);
+  object-fit:contain;filter:drop-shadow(0 0 25px #56ffac50);
+}
+.chapter-transition-wordmark{
+  font-size:clamp(37px,7vw,78px);font-weight:950;
+  letter-spacing:-.055em;line-height:1.04;color:#f1fff6;
+}
+.chapter-transition-wordmark span{color:#80f5b2}
+.chapter-transition-subtitle{font-size:clamp(10px,1.2vw,15px);letter-spacing:.25em;color:#b6e9cc;font-weight:800}
+@keyframes chapter-spin-in{
+  0%{transform:translateY(110px) rotateY(-115deg) scale(.3);opacity:0;filter:blur(15px)}
+  55%{opacity:1;filter:blur(0)}
+  100%{transform:translateY(0) rotateY(0deg) scale(1);opacity:1;filter:blur(0)}
+}
+@keyframes chapter-ring-rotate{to{rotate:360deg}}
+@keyframes chapter-fly-away{
+  from{transform:translateY(0) rotateY(0) scale(1);opacity:1}
+  to{transform:translateY(-70px) rotateY(55deg) scale(1.55);opacity:0}
+}
+@media(prefers-reduced-motion:no-preference){
+  .chapter-transition.is-active .chapter-transition-center{animation:chapter-spin-in .72s cubic-bezier(.16,.82,.26,1) both}
+  .chapter-transition.is-active .chapter-transition-ring{animation:chapter-ring-rotate 8s linear infinite}
+  .chapter-transition.is-active .chapter-transition-ring.ring-b{animation-direction:reverse}
+  .chapter-transition.is-exiting .chapter-transition-center{animation:chapter-fly-away .48s ease-in forwards}
+}
+@media(prefers-reduced-motion:reduce){
+  .chapter-transition{display:none!important}
+}
+#about{scroll-margin-top:95px}
