@@ -164,6 +164,51 @@ document.addEventListener("DOMContentLoaded",function(){
     },1500);
   }
 
+  // Orbit around the logo without rotating the cards: labels stay horizontal.
+  const badgeOrbitOne=document.querySelector(".badge-orbit-one");
+  const badgeOrbitTwo=document.querySelector(".badge-orbit-two");
+  if(badgeOrbitOne&&badgeOrbitTwo){
+    const motionOff=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const heroVisual=document.querySelector(".hero-visual");
+    function orbitRadius(){
+      return window.innerWidth<=440?116:window.innerWidth<=760?150:195;
+    }
+    function placeOrbit(angle){
+      const radius=orbitRadius();
+      [badgeOrbitOne,badgeOrbitTwo].forEach(function(badge,index){
+        const a=angle+index*Math.PI;
+        const x=Math.cos(a)*radius;
+        const y=Math.sin(a)*radius;
+        badge.style.transform="translate("+x.toFixed(2)+"px,"+y.toFixed(2)+"px)";
+      });
+    }
+    // Start opposite each other, to the top right and bottom left.
+    placeOrbit(-Math.PI/4);
+    if(!motionOff){
+      const revolutionMs=24000;
+      let active=true,elapsed=0,lastTimestamp=null,rafId=0;
+      if("IntersectionObserver" in window&&heroVisual){
+        const watch=new IntersectionObserver(function(entries){
+          active=entries[0].isIntersecting;
+          if(!active)lastTimestamp=null;
+        },{threshold:0});
+        watch.observe(heroVisual);
+      }
+      function orbitFrame(timestamp){
+        if(active&&!document.hidden){
+          if(lastTimestamp!==null)elapsed+=(timestamp-lastTimestamp);
+          placeOrbit(-Math.PI/4+elapsed/revolutionMs*Math.PI*2);
+          lastTimestamp=timestamp;
+        }else{lastTimestamp=null;}
+        rafId=requestAnimationFrame(orbitFrame);
+      }
+      rafId=requestAnimationFrame(orbitFrame);
+    }
+    window.addEventListener("resize",function(){
+      if(motionOff)placeOrbit(-Math.PI/4);
+    },{passive:true});
+  }
+
   // Interactive depth on desktop cards; small perspective angles preserve readability.
   if(!reduceMotion&&window.matchMedia("(hover:hover) and (pointer:fine)").matches){
     const cards=document.querySelectorAll(".project-grid .project-card,.feature-grid .card,.mentor-grid .card,.tracks-grid .card,.patron-directions .card,.donor-grid .card");
