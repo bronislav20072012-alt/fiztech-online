@@ -968,3 +968,22 @@ html{scroll-snap-type:y proximity;scroll-padding-top:80px}
     z-index:12;display:block;white-space:nowrap;
   }
 }
+
+
+/* Compact orbit composition on narrow phones: keep all three captions visible. */
+@media(max-width:650px){
+  #top .hero-visual{height:350px}
+  #top .hero-visual .planet{width:166px;height:166px}
+  #top .hero-visual .halo{width:180px;height:180px}
+  #top .hero-visual .orbit{width:220px;height:220px;margin:-110px}
+  #top .hero-visual .orbit-two{width:182px;height:182px;margin:-91px}
+  #top .hero-visual .orbit-three{width:266px;height:266px;margin:-133px}
+  #top .hero-satellite.satellite-school{--sat-x:-98px;--sat-y:-105px}
+  #top .hero-satellite.satellite-maker{--sat-x:98px;--sat-y:-105px}
+  #top .hero-satellite.satellite-community{--sat-x:0px;--sat-y:108px}
+  #top .hero-satellite .satellite-caption{white-space:nowrap;z-index:9}
+}
+@media(max-width:380px){
+  #top .hero-satellite.satellite-school{--sat-x:-86px}
+  #top .hero-satellite.satellite-maker{--sat-x:86px}
+}
