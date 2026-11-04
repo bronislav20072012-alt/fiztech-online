@@ -26,12 +26,17 @@ document.addEventListener("DOMContentLoaded",function(){
     window.addEventListener("wheel",function(event){
       if(!guidedScroll.matches||event.ctrlKey||event.defaultPrevented||Math.abs(event.deltaY)<9)return;
       const target=event.target instanceof Element?event.target:null;
-      // Never capture gestures within independent scroll containers or controls.
+      // Leave scrolling inside nested panels and form controls alone.
       if(target&&target.closest(".demo-view,textarea,select,input,[contenteditable],.mobile-nav"))return;
-      if(performance.now()<scrollLockUntil){event.preventDefault();return;}
       const direction=event.deltaY>0?1:-1;
       const current=activeChapter();
       const chapter=chapters[current];
+      // Read a long slide's contents before switching chapters.
+      if(chapter.scrollHeight>chapter.clientHeight+2){
+        const available=chapter.scrollHeight-chapter.clientHeight;
+        if((direction>0&&chapter.scrollTop<available-2)||(direction<0&&chapter.scrollTop>2))return;
+      }
+      if(performance.now()<scrollLockUntil){event.preventDefault();return;}
       const top=chapter.getBoundingClientRect().top+window.scrollY-stickyHeight();
       const bottom=chapter.getBoundingClientRect().bottom+window.scrollY;
       const viewportBottom=window.scrollY+window.innerHeight;
