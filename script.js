@@ -1,5 +1,19 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
+  // Keep desktop navigation in sync with the section being read.
+  const headerLinks=Array.from(document.querySelectorAll(".header-navigation a"));
+  if("IntersectionObserver" in window){
+    const sectionObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting)return;
+        headerLinks.forEach(function(link){
+          if(link.hash==="#"+entry.target.id)link.setAttribute("aria-current","location");
+          else link.removeAttribute("aria-current");
+        });
+      });
+    },{rootMargin:"-110px 0px -55% 0px",threshold:0});
+    document.querySelectorAll("#main > section[id]").forEach(function(section){sectionObserver.observe(section);});
+  }
   const menuButton=document.querySelector(".menu-toggle");
   const menu=document.getElementById("mobile-navigation");
   if(menuButton&&menu){
@@ -237,6 +251,17 @@ document.addEventListener("DOMContentLoaded",function(){
 
   const interestForm=document.getElementById("interest-form");
   const formStatus=document.getElementById("form-status");
+  document.querySelectorAll("[data-program-interest]").forEach(function(link){
+    link.addEventListener("click",function(){
+      const grade=document.getElementById("interest-grade");
+      const comment=document.getElementById("interest-comment");
+      if(grade)grade.value=link.dataset.programGrade;
+      if(comment&&!comment.value.trim()){
+        comment.value="Здравствуйте! Хочу узнать подробнее о программе «"+link.dataset.programInterest+"».";
+      }
+      if(formStatus)formStatus.textContent="Выбрана программа «"+link.dataset.programInterest+"». Укажите имя и дополните письмо своим вопросом.";
+    });
+  });
   if(interestForm&&formStatus){
     interestForm.addEventListener("submit",function(e){
       e.preventDefault();
