@@ -370,3 +370,107 @@
 }
 
 
+
+
+/* Brand system: one cohesive emerald line-icon style instead of assorted emojis. */
+.icon-sprite{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.brand-glyph{width:56%;height:56%;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none;overflow:visible;filter:drop-shadow(0 6px 9px #3effa843)}
+.feature-icon,.track-symbol,.demo-task-glyph,.demo-tile-icon,.satellite-icon{color:#bcffdc;background:linear-gradient(145deg,#245a3e,#10291e);border:1px solid #4c916e;box-shadow:inset 0 1px 0 #a3ffd22e,0 14px 25px #0004,0 0 25px #35e58a12}
+.feature-icon{width:58px;height:58px;border-radius:17px}
+.track-symbol{height:96px;width:96px;border-radius:24px;transform:translateZ(18px)}
+.track-symbol .brand-glyph{stroke-width:1.35}
+.program-emoji{display:grid;place-items:center;min-height:150px;filter:none}
+.program-emoji .brand-glyph{height:140px;width:140px;stroke-width:1;filter:drop-shadow(0 18px 22px #12c88635);color:#a5ffce}
+
+/* The small satellites are clickable destinations, not decoration. */
+.hero-satellites{position:absolute;inset:0;pointer-events:none;z-index:7}
+.hero-satellite{
+  --sat-x:0px;--sat-y:0px;
+  position:absolute;top:50%;left:50%;
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px 6px 6px;
+  min-height:45px;
+  border-radius:999px;border:1px solid #62b1849c;
+  background:linear-gradient(140deg,#164d33f0,#081c13f5);
+  box-shadow:0 8px 25px #0008,0 0 14px #17d78420;
+  color:#e4fff1;font-size:11px;font-weight:850;
+  white-space:nowrap;pointer-events:auto;
+  transform:translate(calc(-50% + var(--sat-x)),calc(-50% + var(--sat-y)));
+  transition:box-shadow .3s,border-color .3s,background .3s,scale .3s;
+}
+.satellite-icon{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:50%;box-shadow:inset 0 1px 0 #a3ffd22e}
+.satellite-icon .brand-glyph{width:18px;height:18px}
+.hero-satellite:hover,.hero-satellite:focus-visible{border-color:#baffdb;background:#1b6842;box-shadow:0 12px 28px #0009,0 0 26px #4df0a261;scale:1.08}
+.satellite-school{--sat-x:-155px;--sat-y:-155px}
+.satellite-maker{--sat-x:158px;--sat-y:-150px}
+.satellite-community{--sat-x:0px;--sat-y:200px}
+@media(prefers-reduced-motion:no-preference){
+  @keyframes sat-float{0%,100%{translate:0 -3px}50%{translate:0 3px}}
+  .hero-satellite{animation:sat-float 5s ease-in-out infinite}
+  .satellite-maker{animation-delay:-1.6s}
+  .satellite-community{animation-delay:-3.2s}
+}
+@media(max-width:1060px){
+  .satellite-school{--sat-x:-140px;--sat-y:-151px}
+  .satellite-maker{--sat-x:140px;--sat-y:-151px}
+  .satellite-community{--sat-y:180px}
+}
+@media(max-width:700px){
+  .hero-satellite{padding:4px;min-width:38px;min-height:38px;border-radius:50%;justify-content:center}
+  .satellite-caption{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;background:#082216ee;border:1px solid #326b4a;border-radius:6px;padding:2px 5px;font-size:9px}
+  .satellite-icon{width:30px;height:30px;flex-basis:30px}
+  .satellite-school{--sat-x:-115px;--sat-y:-125px}
+  .satellite-maker{--sat-x:115px;--sat-y:-125px}
+  .satellite-community{--sat-y:144px}
+}
+@media(max-width:430px){
+  .satellite-school{--sat-x:-95px;--sat-y:-119px}
+  .satellite-maker{--sat-x:95px;--sat-y:-119px}
+  .satellite-community{--sat-y:143px}
+}
+
+/* A richer, still demonstrative, student workspace. */
+.app-demo{box-shadow:0 22px 60px #0006,0 0 0 1px #4aff9f12}
+.demo-header .demo-pill{border-radius:999px;padding:6px 10px;background:#225f3b;border:1px solid #5dc486;color:#d4ffdf;font-size:10px}
+.demo-tabs{flex-wrap:wrap}
+.demo-welcome{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.demo-welcome h3{font-size:22px;margin-bottom:4px}
+.demo-welcome p{font-size:12px;margin:0}
+.demo-progress-dial{--percent:33;display:grid;place-items:center;align-content:center;gap:0;width:92px;height:92px;flex:0 0 92px;border-radius:50%;background:radial-gradient(circle,#092216 61%,transparent 63%),conic-gradient(#8cffbc calc(var(--percent)*1%),#28563c 0);box-shadow:0 0 24px #2fff8d15}
+.demo-progress-dial strong{font-size:20px;line-height:1.3;color:#d7ffea}
+.demo-progress-dial small{font-size:10px;color:#98cfae}
+.demo-weekline{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:20px 0 8px}
+.demo-weekline span{display:grid;place-items:center;padding:7px 3px;background:#133923;border:1px solid #275e3b;border-radius:8px;font-size:10px;font-weight:850}
+.demo-weekline .is-day-active{color:#072c19;background:var(--mint);border-color:var(--mint)}
+.demo-task-list{display:grid;gap:7px}
+.demo-check-task{display:flex;position:relative;cursor:pointer;border:1px solid #28563c;border-radius:12px;background:#10321f;margin:0;padding:10px 12px;transition:border-color .2s,background .2s}
+.demo-check-task:hover{background:#19452d;border-color:#4ca777}
+.demo-check-task input{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:23px;height:23px;opacity:0}
+.demo-task.demo-check-task>.demo-task-glyph{width:38px;height:38px;flex:0 0 38px;border-radius:10px;font-size:16px;background:linear-gradient(145deg,#245a3e,#10291e)}
+.demo-task-glyph .brand-glyph{width:21px;height:21px}
+.demo-check-task>span:nth-last-child(2){flex:1}
+.demo-check-task .demo-task-check{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border:1px solid #649679;border-radius:50%;font-size:12px;background:transparent;color:transparent}
+.demo-check-task:has(input:checked) .demo-task-check{color:#092318;background:var(--mint);border-color:var(--mint)}
+.demo-check-task:has(input:checked) b{text-decoration:line-through;text-decoration-color:#5f9b76}
+.demo-check-task:focus-within{outline:2px solid #b6ffd8;outline-offset:2px}
+.demo-disclaimer{font-size:10px!important;color:#8ab69b!important;margin:13px 0 0}
+.demo-project-heading h3{font-size:21px;margin-bottom:4px}
+.demo-project-heading p{font-size:12px;margin-bottom:15px}
+.demo-project-cards{display:grid;gap:10px}
+.demo-project-tile{display:flex;align-items:center;gap:10px;padding:12px;border-radius:13px;border:1px solid #306c49;background:#103420}
+.demo-tile-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px}
+.demo-tile-icon .brand-glyph{width:24px;height:24px}
+.demo-project-tile>div{flex:1;min-width:0}
+.demo-project-tile b,.demo-project-tile small{display:block}
+.demo-project-tile b{font-size:12px}
+.demo-project-tile small{font-size:10px;color:#9bc9ab}
+.demo-stage{font-size:9px;border:1px solid #3c8f5b;border-radius:999px;padding:4px 7px;color:#bfffe0;white-space:nowrap}
+@media(max-width:480px){
+  .demo-view{padding:15px}
+  .demo-welcome h3{font-size:18px}
+  .demo-progress-dial{width:76px;height:76px;flex-basis:76px}
+  .demo-task.demo-check-task>.demo-task-glyph{width:34px;height:34px;flex-basis:34px}
+  .demo-project-tile{gap:7px;padding:10px}
+  .demo-stage{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.hero-satellite{animation:none!important;transition:none!important}}
