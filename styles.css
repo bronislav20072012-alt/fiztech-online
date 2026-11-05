@@ -1124,3 +1124,4 @@ html.social-qr-open{overflow:hidden}
  #advantages .online-benefit p{font-size:13px}
  #advantages .online-benefits-link{width:100%;justify-content:center}
 }
+@media(max-width:370px){.donor-grid{grid-template-columns:1fr}}
