@@ -284,26 +284,37 @@ document.addEventListener("DOMContentLoaded",function(){
       if(comment&&!comment.value.trim()){
         comment.value="Здравствуйте! Хочу узнать подробнее о программе «"+link.dataset.programInterest+"».";
       }
-      if(formStatus)formStatus.textContent="Выбрана программа «"+link.dataset.programInterest+"». Укажите имя и дополните письмо своим вопросом.";
+      if(formStatus)formStatus.textContent="Выбрана программа «"+link.dataset.programInterest+"». Укажите имя, почту для ответа и дополните сообщение своим вопросом.";
     });
   });
   if(interestForm&&formStatus){
-    interestForm.addEventListener("submit",function(e){
-      e.preventDefault();
-      if(!interestForm.reportValidity())return;
-      const form=new FormData(interestForm);
-      const message=[
-        "Обращение по проекту «Физтех Онлайн»",
-        "Имя: "+String(form.get("name")||"").trim(),
-        "Статус: "+String(form.get("role")||""),
-        "Класс: "+String(form.get("grade")||""),
-        "Комментарий: "+String(form.get("comment")||"").trim()
-      ].join("\n");
-      const recipient="phystechonline3@gmail.com";
-      const subject="Вопрос или предложение — Физтех Онлайн";
-      const emailUrl="mailto:"+recipient+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(message);
-      formStatus.textContent="Откроется ваше почтовое приложение. Проверьте письмо и нажмите «Отправить». Если почта не открылась, напишите на "+recipient+".";
-      window.location.href=emailUrl;
+    const contactSubmit=interestForm.querySelector('[type="submit"]');
+    const nextPage=interestForm.querySelector('[name="_next"]');
+    let contactSubmitting=false;
+    if(nextPage)nextPage.value=new URL("contact-success.html",window.location.href).href;
+    function resetContactSubmission(){
+      contactSubmitting=false;
+      interestForm.removeAttribute("aria-busy");
+      if(contactSubmit){contactSubmit.disabled=false;contactSubmit.removeAttribute("aria-disabled");}
+      if(formStatus.dataset.submitting==="true"){
+        formStatus.textContent="";
+        delete formStatus.dataset.submitting;
+      }
+    }
+    window.addEventListener("pageshow",resetContactSubmission);
+    interestForm.addEventListener("submit",function(event){
+      if(contactSubmitting){event.preventDefault();return;}
+      ["interest-name","interest-email","interest-comment"].forEach(function(id){
+        const input=document.getElementById(id);
+        if(input)input.value=input.value.trim();
+      });
+      if(!interestForm.reportValidity()){event.preventDefault();return;}
+      contactSubmitting=true;
+      interestForm.setAttribute("aria-busy","true");
+      if(contactSubmit){contactSubmit.disabled=true;contactSubmit.setAttribute("aria-disabled","true");}
+      formStatus.dataset.submitting="true";
+      formStatus.textContent="Отправляем обращение. При необходимости подтвердите отправку на странице проверки.";
+      // Leave native submission intact so the provider can validate and deliver it.
     });
   }
 

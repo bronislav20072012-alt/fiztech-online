@@ -8,8 +8,8 @@
 <meta property="og:title" content="Физтех Онлайн — учись. Думай. Создавай.">
 <meta property="og:description" content="Школа нового поколения: знания, предпринимательское мышление и реальные проекты.">
 <title>Физтех Онлайн — Школа создателей будущего</title>
-<link rel="stylesheet" href="styles.css?v=20261105-hero-stack8">
-<script src="script.js?v=20261105-social-qr5" defer></script>
+<link rel="stylesheet" href="styles.css?v=20261105-contact9">
+<script src="script.js?v=20261105-contact6" defer></script>
 </head>
 <body>
 <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -105,14 +105,22 @@
 <div class="event-showcase" id="event-panel-team" role="tabpanel" aria-labelledby="event-tab-team" data-event-panel="team" hidden><div class="event-showcase-art team-art" aria-hidden="true"><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-users"></use></svg><span><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-heart"></use></svg></span></div><div class="event-showcase-copy"><span class="mini-label">ШКОЛЬНОЕ СООБЩЕСТВО</span><h3>Команда, в которой тебя понимают</h3><p>Совместные занятия, экскурсии, клубы по интересам и новые знакомства. Здесь учатся не только предметам, но и сотрудничеству.</p><a href="#ai" class="text-link">Познакомиться с подходом наставников ↗</a></div></div>
 <div class="event-showcase" id="event-panel-demo" role="tabpanel" aria-labelledby="event-tab-demo" data-event-panel="demo" hidden><div class="event-showcase-art demo-art" aria-hidden="true"><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-star"></use></svg><span><svg class="brand-glyph" aria-hidden="true" focusable="false"><use href="#ico-rocket"></use></svg></span></div><div class="event-showcase-copy"><span class="mini-label">ПРЕЗЕНТАЦИИ И ДОСТИЖЕНИЯ</span><h3>Сцена для больших идей</h3><p>Формат Demo Day: команды представляют проекты, объясняют решения, получают вопросы и обратную связь от экспертов.</p><a href="#about" class="text-link">Изучить «Путь создателя» ↗</a></div></div>
 <p class="footnote">Представлены направления школьных мероприятий. Конкретные даты и места уточняются по календарю.</p></div></section>
-<section class="section join-section" id="join"><div class="container join-grid"><div><h2>Будущее создают <span class="accent">те, кто действует.</span></h2><p>Узнайте больше о наших подходах к учёбе, наставничеству и проектам. Напишите нам, если у вас есть вопрос о программе, идея или предложение о сотрудничестве.</p><p class="footnote">После заполнения формы откроется ваше почтовое приложение с готовым письмом. Для отправки нажмите «Отправить» в почте. Это не заявление о зачислении.</p><p class="contact-mail">Почта для обращений: <a href="mailto:phystechonline3@gmail.com">phystechonline3@gmail.com</a></p></div><form class="interest-form card contact-form" id="interest-form">
+<section class="section join-section" id="join"><div class="container join-grid"><div><h2>Будущее создают <span class="accent">те, кто действует.</span></h2><p>Узнайте больше о наших подходах к учёбе, наставничеству и проектам. Напишите нам, если у вас есть вопрос о программе, идея или предложение о сотрудничестве.</p><p class="footnote">Заполните форму, чтобы отправить вопрос или предложение на почту школы. Это не заявление о зачислении.</p><p class="contact-mail">Почта для обращений: <a href="mailto:phystechonline3@gmail.com">phystechonline3@gmail.com</a></p></div><form class="interest-form card contact-form" id="interest-form" action="https://formsubmit.co/phystechonline3@gmail.com" method="POST" accept-charset="UTF-8" aria-describedby="contact-delivery-note">
+<input type="hidden" name="_subject" value="Новое обращение — Физтех Онлайн">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_next" value="https://phystechonline.ru/contact-success.html">
+<div class="contact-honeypot" aria-hidden="true"><label for="contact-website">Сайт</label><input id="contact-website" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
 <div class="contact-form-heading">
 <h3>Вопросы и предложения</h3>
-<p>Расскажите о себе и вашем вопросе — мы подготовим письмо на почту школы.</p>
+<p>Расскажите о себе и вашем вопросе. Укажите почту, на которую можно ответить.</p>
 </div>
 <div class="form-field">
 <label for="interest-name">Ваше имя <span class="field-hint">обязательно</span></label>
 <input id="interest-name" name="name" required maxlength="100" autocomplete="name" placeholder="Как к вам обращаться?">
+</div>
+<div class="form-field">
+<label for="interest-email">Почта для ответа <span class="field-hint">обязательно</span></label>
+<input id="interest-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" placeholder="name@example.com">
 </div>
 <div class="form-row">
 <div class="form-field">
@@ -143,12 +151,12 @@
 </div>
 </div>
 <div class="form-field">
-<label for="interest-comment">Ваше сообщение</label>
-<textarea aria-describedby="message-hint" id="interest-comment" name="comment" rows="3" maxlength="1000" placeholder="Напишите ваш вопрос или предложение..."></textarea>
+<label for="interest-comment">Ваше сообщение <span class="field-hint">обязательно</span></label>
+<textarea aria-describedby="message-hint" id="interest-comment" name="comment" rows="3" maxlength="1000" required placeholder="Напишите ваш вопрос или предложение..."></textarea>
 <p class="field-help" id="message-hint">Можно спросить о программе, наставниках или предложить сотрудничество.</p>
 </div>
-<button class="button full-width contact-submit" type="submit">Подготовить письмо <svg class="action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></button>
-<p class="contact-form-note">Откроется почтовое приложение с готовым письмом. Отправка только после вашего подтверждения.</p>
+<button class="button full-width contact-submit" type="submit">Отправить обращение <svg class="action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></button>
+<p class="contact-form-note" id="contact-delivery-note">Для доставки используется FormSubmit: после проверки отправки вы вернётесь на сайт. Данные формы передаются на почту школы для ответа на обращение.</p>
 <p class="form-status" id="form-status" role="status"></p>
 </form></div></section>
 <section class="section section-dark" id="partners"><div class="container">

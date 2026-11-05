@@ -1094,3 +1094,16 @@ html.social-qr-open{overflow:hidden}
  .social-qr-close{width:42px;height:42px;margin-bottom:-42px}
 }
 @media(prefers-reduced-motion:reduce){.social-qr-dialog[open],.social-qr-dialog::backdrop,.social-qr-dialog.is-closing,.social-qr-dialog.is-closing::backdrop{animation:none}}
+
+/* The contact form posts over HTTPS and returns to a separate receipt page. */
+.contact-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.contact-form .contact-submit:disabled{opacity:.65;cursor:wait;transform:none;filter:none;box-shadow:none}
+.contact-success{display:grid;place-items:center;min-height:65vh;padding-block:64px}
+.contact-success-card{width:min(100%,860px);padding:clamp(24px,5vw,56px);text-align:center}
+.contact-success-icon{display:block;width:58px;height:58px;color:var(--mint);margin:0 auto 24px}
+.contact-success h1{font-size:clamp(34px,4.5vw,58px);line-height:1.15;margin:18px 0 24px}
+.contact-success p{max-width:64ch;margin-inline:auto;font-size:15px;line-height:1.9}
+.contact-success-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:28px 0}
+.contact-success .contact-success-mail{font-size:12px;margin-bottom:0;overflow-wrap:anywhere}
+.contact-success-mail a{color:var(--mint);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:650px){.contact-success{padding-block:36px}.contact-success-actions{display:grid;grid-template-columns:1fr}}
