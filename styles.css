@@ -1130,3 +1130,9 @@ html.social-qr-open{overflow:hidden}
 .header-video-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .header-background-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .header-video-background::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#020a06b3,#020a0640 48%,#020a06a6)}
+.site-header .header-animation-toggle{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin-top:8px;padding:11px 12px;border:1px solid #396b4d;border-radius:10px;background:#123121;color:#e7fff0;font:750 14px/1.3 var(--font);text-align:left;cursor:pointer}
+.site-header .header-animation-toggle[hidden]{display:none!important}
+.header-animation-toggle svg{flex:none;width:18px;height:18px;color:var(--mint)}
+.header-animation-toggle .header-pause-icon,.header-animation-toggle.is-playing .header-play-icon{display:none}
+.header-animation-toggle.is-playing .header-pause-icon{display:block}
+.site-header .header-animation-toggle:hover{background:#1a432c}
