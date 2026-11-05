@@ -1049,11 +1049,12 @@ html{scroll-snap-type:none;scroll-padding-top:110px}
 .demo-launch .demo-launch-note{font-size:11px;line-height:1.7;color:#a5c8b2;margin-top:16px}
 @media(max-width:650px){.demo-launch{padding:24px}.demo-preview-list{gap:14px 10px}.demo-preview-list li{font-size:11px}}
 
-/* Keep the hero's text layers above the logo despite its internal 3D depth. */
-#top .hero-visual{isolation:isolate;transform-style:flat}
-#top .hero-visual .planet{z-index:1}
-#top .hero-visual .badge-orbit{z-index:2}
-#top .hero-visual .hero-satellites{z-index:3}
+/* Confine the 3D artwork to its own plane beneath the two text layers. */
+#top .hero-visual{isolation:isolate;transform-style:flat;perspective:none}
+#top .hero-art{position:absolute;inset:0;display:grid;place-items:center;z-index:1;isolation:isolate;transform-style:flat;perspective:800px;pointer-events:none}
+#top .hero-orbit-labels{position:absolute;inset:0;z-index:2;isolation:isolate;transform-style:flat;pointer-events:none}
+#top .hero-satellites{z-index:3;isolation:isolate;transform-style:flat}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){#top .hero-art{perspective:1050px}}
 
 /* Social QR codes open in the native modal layer above the whole page. */
 .footer-social .social-qr-trigger{display:flex;justify-content:center;gap:10px;width:100%;min-height:48px;margin-top:12px;padding:12px 14px;font-size:12px;white-space:normal;text-align:center}
