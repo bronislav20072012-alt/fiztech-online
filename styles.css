@@ -1054,3 +1054,42 @@ html{scroll-snap-type:none;scroll-padding-top:110px}
 #top .hero-visual .planet{z-index:1}
 #top .hero-visual .badge-orbit{z-index:2}
 #top .hero-visual .hero-satellites{z-index:3}
+
+/* Social QR codes open in the native modal layer above the whole page. */
+.footer-social .social-qr-trigger{display:flex;justify-content:center;gap:10px;width:100%;min-height:48px;margin-top:12px;padding:12px 14px;font-size:12px;white-space:normal;text-align:center}
+.social-qr-trigger svg{width:20px;height:20px;flex:none}
+html{scrollbar-gutter:stable}
+html.social-qr-open{overflow:hidden}
+.social-qr-dialog{position:fixed;inset:0;width:min(920px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 40px);margin:auto;padding:28px;border:1px solid #508a68;border-radius:24px;background:radial-gradient(ellipse at 50% 0%,#20593b66,transparent 70%),#091b11;color:var(--ink);font:inherit;overflow:auto;overscroll-behavior:contain;box-shadow:0 32px 100px #000a}
+.social-qr-dialog[open]{animation:social-qr-enter .28s cubic-bezier(.2,.8,.2,1) both}
+.social-qr-dialog::backdrop{background:#010904d9;backdrop-filter:blur(8px);animation:social-qr-backdrop-enter .28s ease both}
+.social-qr-dialog.is-closing{animation:social-qr-exit .18s ease both}
+.social-qr-dialog.is-closing::backdrop{animation:social-qr-backdrop-exit .18s ease both}
+.social-qr-close{position:sticky;top:0;z-index:1;display:grid;place-items:center;width:44px;height:44px;margin:0 0 -44px auto;padding:10px;border:1px solid #497a5b;border-radius:12px;background:#133623;color:var(--ink)}
+.social-qr-close:hover{background:#22593b;border-color:var(--mint)}
+.social-qr-close svg{width:22px;height:22px}
+.social-qr-heading{text-align:center;padding:12px 42px 0}
+.social-qr-heading h2{font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-1px;max-width:none;margin:12px 0 14px}
+.social-qr-heading p{font-size:14px;line-height:1.75;margin-bottom:0}
+.social-qr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.social-qr-card{min-width:0;padding:18px;border:1px solid #39694c;border-radius:18px;background:#102d1d;text-align:center}
+.social-qr-card h3{font-size:20px;letter-spacing:-.4px;margin:0 0 5px}
+.social-qr-handle{font-size:12px;color:#b5d9c2;margin:0;overflow-wrap:anywhere}
+.social-qr-code{display:block;width:100%;max-width:220px;height:auto;aspect-ratio:1;margin:18px auto;background:#fff;border:8px solid #fff;border-radius:10px}
+.social-qr-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;color:var(--mint);font-size:13px;font-weight:750}
+.social-qr-link:hover{text-decoration:underline;text-underline-offset:4px}
+.social-qr-hint{font-size:12px;line-height:1.75;color:#a5c8b2;text-align:center;margin:22px 0 0}
+@keyframes social-qr-enter{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes social-qr-exit{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(10px) scale(.97)}}
+@keyframes social-qr-backdrop-enter{from{opacity:0}to{opacity:1}}
+@keyframes social-qr-backdrop-exit{from{opacity:1}to{opacity:0}}
+@media(max-width:700px){
+ .social-qr-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px);padding:20px;border-radius:20px}
+ .social-qr-heading{padding:12px 34px 0}
+ .social-qr-heading h2{font-size:27px}
+ .social-qr-heading p{font-size:13px}
+ .social-qr-grid{grid-template-columns:1fr;max-width:340px;margin:24px auto 0}
+ .social-qr-code{max-width:220px}
+ .social-qr-close{width:42px;height:42px;margin-bottom:-42px}
+}
+@media(prefers-reduced-motion:reduce){.social-qr-dialog[open],.social-qr-dialog::backdrop,.social-qr-dialog.is-closing,.social-qr-dialog.is-closing::backdrop{animation:none}}

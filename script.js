@@ -1,5 +1,44 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
+  const qrDialog=document.getElementById("social-qr-dialog");
+  if(qrDialog&&typeof qrDialog.showModal==="function"){
+    const qrMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+    let qrOpener=null,qrCloseTimer=0,qrBackdropPress=false;
+    function outsideQR(event){
+      const bounds=qrDialog.getBoundingClientRect();
+      return event.clientX<bounds.left||event.clientX>bounds.right||event.clientY<bounds.top||event.clientY>bounds.bottom;
+    }
+    function closeQR(){
+      if(!qrDialog.open||qrDialog.classList.contains("is-closing"))return;
+      if(qrMotion.matches){qrDialog.close();return;}
+      qrDialog.classList.add("is-closing");
+      qrCloseTimer=window.setTimeout(function(){qrDialog.close();},180);
+    }
+    document.querySelectorAll("[data-open-social-qr]").forEach(function(button){
+      button.hidden=false;
+      button.addEventListener("click",function(){
+        window.clearTimeout(qrCloseTimer);
+        qrDialog.classList.remove("is-closing");
+        qrOpener=button;
+        document.documentElement.classList.add("social-qr-open");
+        if(!qrDialog.open)qrDialog.showModal();
+      });
+    });
+    qrDialog.querySelector("[data-close-social-qr]").addEventListener("click",closeQR);
+    qrDialog.addEventListener("cancel",function(event){event.preventDefault();closeQR();});
+    qrDialog.addEventListener("pointerdown",function(event){qrBackdropPress=outsideQR(event);});
+    qrDialog.addEventListener("click",function(event){
+      if(qrBackdropPress&&outsideQR(event))closeQR();
+      qrBackdropPress=false;
+    });
+    qrDialog.addEventListener("close",function(){
+      window.clearTimeout(qrCloseTimer);
+      qrDialog.classList.remove("is-closing");
+      document.documentElement.classList.remove("social-qr-open");
+      qrBackdropPress=false;
+      if(qrOpener)qrOpener.focus({preventScroll:true});
+    });
+  }
   const menuButton=document.querySelector(".menu-toggle");
   const menu=document.getElementById("mobile-navigation");
   if(menuButton&&menu){
