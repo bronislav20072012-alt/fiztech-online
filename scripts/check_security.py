@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CONTACT_ACTION = "https://formsubmit.co/phystechonline3@gmail.com"
 REQUIRED = {
     "default-src": ["'none'"],
+    "upgrade-insecure-requests": [],
     "script-src": ["'self'"],
     "script-src-attr": ["'none'"],
     "style-src": ["'self'"],
