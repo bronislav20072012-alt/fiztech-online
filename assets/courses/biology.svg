@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220" fill="none">
+  <defs>
+    <radialGradient id="bg"><stop stop-color="#174d37"/><stop offset="1" stop-color="#071b15"/></radialGradient>
+    <linearGradient id="leaf" x1="124" y1="53" x2="245" y2="184" gradientUnits="userSpaceOnUse"><stop stop-color="#c5ffe0"/><stop offset="1" stop-color="#14c781"/></linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" stroke="#89eab5" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h400v220H0z"/><path fill="url(#grid)" d="M0 0h400v220H0z"/>
+  <circle cx="191" cy="113" r="84" stroke="#75dca5" stroke-opacity=".2" stroke-dasharray="3 8"/>
+  <path d="M115 173C93 93 150 46 251 38c11 94-36 153-136 135Z" fill="url(#leaf)"/>
+  <path d="M103 187 239 53M139 151l-7-47m35 20-1-47m31 18 1-29m-59 85 50 2m-21-30 50 2m-22-30 33 1" stroke="#087147" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M284 38c-48 31 47 72 0 104s0 48 0 48m35-152c48 31-47 72 0 104s0 48 0 48" stroke="#a4ffcc" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M281 48h40m-29 24h18m-20 24h22m-34 24h47m-42 24h37m-31 24h25" stroke="#68dca0" stroke-width="1.5"/>
+  <circle cx="58" cy="76" r="17" stroke="#7bdba5" stroke-opacity=".45"/><circle cx="58" cy="76" r="7" fill="#a4ffcc" fill-opacity=".7"/>
+  <path d="M61 155h14m-7-7v14M248 196h12m-6-6v12" stroke="#b6ffda"/><circle cx="353" cy="84" r="3" fill="#6cefaa"/>
+</svg>

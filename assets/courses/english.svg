@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220" fill="none">
+  <defs>
+    <radialGradient id="bg"><stop stop-color="#174d37"/><stop offset="1" stop-color="#071b15"/></radialGradient>
+    <linearGradient id="bubble" x1="100" y1="50" x2="290" y2="181" gradientUnits="userSpaceOnUse"><stop stop-color="#c5ffe0"/><stop offset="1" stop-color="#26d78f"/></linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" stroke="#89eab5" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h400v220H0z"/><path fill="url(#grid)" d="M0 0h400v220H0z"/>
+  <circle cx="200" cy="110" r="86" stroke="#75dca5" stroke-opacity=".2" stroke-dasharray="3 8"/>
+  <path d="M209 99h80c13 0 23 10 23 23v28c0 13-10 23-23 23h-9v21l-27-21h-44c-13 0-23-10-23-23v-28c0-13 10-23 23-23Z" fill="#11a86c" stroke="#9effc8" stroke-width="1.5"/>
+  <path d="M112 42h121c16 0 29 13 29 29v47c0 16-13 29-29 29h-68l-32 24v-24h-21c-16 0-29-13-29-29V71c0-16 13-29 29-29Z" fill="url(#bubble)"/>
+  <g stroke="#0d7c50" stroke-width="1.5"><circle cx="174" cy="94" r="38"/><ellipse cx="174" cy="94" rx="17" ry="38"/><path d="M136 94h76m-69-19c20 9 41 9 62 0m-62 38c20-9 41-9 62 0"/></g>
+  <g fill="#c7ffe0"><circle cx="230" cy="137" r="4"/><circle cx="249" cy="137" r="4"/><circle cx="268" cy="137" r="4"/></g>
+  <path d="M55 98h16m-8-8v16M322 45h16m-8-8v16" stroke="#b6ffda"/><circle cx="61" cy="162" r="3" fill="#6cefaa"/>
+  <path d="m335 147 7 11-7 11-7-11 7-11Z" stroke="#8aeab4" stroke-opacity=".7"/>
+</svg>

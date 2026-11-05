@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220" fill="none">
+  <defs>
+    <radialGradient id="bg"><stop stop-color="#174d37"/><stop offset="1" stop-color="#071b15"/></radialGradient>
+    <linearGradient id="paper" x1="112" y1="68" x2="285" y2="182" gradientUnits="userSpaceOnUse"><stop stop-color="#d0ffe3"/><stop offset="1" stop-color="#4fe6a0"/></linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" stroke="#89eab5" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#bg)" d="M0 0h400v220H0z"/><path fill="url(#grid)" d="M0 0h400v220H0z"/>
+  <circle cx="200" cy="111" r="85" stroke="#75dca5" stroke-opacity=".2" stroke-dasharray="3 8"/>
+  <path d="M94 83c45-15 74-10 106 10 32-20 61-25 106-10v104c-42-13-73-7-106 11-33-18-64-24-106-11V83Z" fill="#0b8d5b"/>
+  <path d="M103 72c40-11 70-4 97 15 27-19 57-26 97-15v106c-38-11-71-2-97 15-26-17-59-26-97-15V72Z" fill="url(#paper)"/>
+  <path d="M200 87v106m-78-97c22-1 39 4 57 12m-57 12c22-1 39 4 57 12m-57 12c22-1 39 4 57 12m43-48c18-8 35-13 57-12m-57 36c18-8 35-13 57-12m-57 36c18-8 35-13 57-12" stroke="#0b744a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M253 34c17 22 10 37-7 45 5-20 1-26-7-33l14-12Z" fill="#9effc8"/>
+  <path d="M243 41 221 84m17-33 6 5" stroke="#d8ffe9" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="m65 39 4 10 11 4-11 4-4 10-4-10-10-4 10-4 4-10ZM331 128l3 8 9 3-9 3-3 8-3-8-8-3 8-3 3-8Z" stroke="#b6ffda"/>
+  <circle cx="333" cy="59" r="3" fill="#6cefaa"/><circle cx="62" cy="157" r="3" fill="#6cefaa"/>
+</svg>

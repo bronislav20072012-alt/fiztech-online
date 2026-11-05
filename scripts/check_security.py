@@ -102,8 +102,13 @@ class SecurityCheck(HTMLParser):
                 self.error("CSP was weakened or changed; review its security impact")
         if self.referrers != ["strict-origin-when-cross-origin"]:
             self.error("Referrer privacy policy is missing or changed")
-        if self.scripts != ["https.js", "script.js"]:
-            self.error("Only the HTTPS guard and application script are allowed")
+        allowed_scripts = (
+            ["https.js", "demo.js", "os-assistant.js"]
+            if self.path.name == "demo.html"
+            else ["https.js", "script.js"]
+        )
+        if self.scripts != allowed_scripts:
+            self.error("Only the page's HTTPS guard and approved application scripts are allowed")
         return self.errors
 
 
