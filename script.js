@@ -18,6 +18,41 @@ document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll(".logo-full-image").forEach(function(image){prepareLogo(image,"logo-image-loaded");});
   document.querySelectorAll(".planet-logo").forEach(function(image){prepareLogo(image,"has-logo","assets/ft-symbol.svg");});
 
+  // The header animation is decorative, local and silent; keep its poster for reduced motion.
+  const headerVideo=document.querySelector("[data-header-video]");
+  if(headerVideo){
+    const headerMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+    const headerConnection=navigator.connection;
+    let headerVideoFailed=false;
+    headerVideo.muted=true;
+    headerVideo.defaultMuted=true;
+    function showHeaderPoster(){
+      headerVideo.pause();
+      if(headerVideo.hasAttribute("src")){
+        headerVideo.removeAttribute("src");
+        headerVideo.load();
+      }
+    }
+    function updateHeaderVideo(){
+      if(headerVideoFailed||headerMotion.matches||(headerConnection&&headerConnection.saveData)){
+        showHeaderPoster();return;
+      }
+      if(document.hidden){headerVideo.pause();return;}
+      if(!headerVideo.hasAttribute("src"))headerVideo.src=headerVideo.dataset.videoSrc;
+      const playback=headerVideo.play();
+      if(playback&&typeof playback.catch==="function")playback.catch(function(error){
+        if(error.name!=="AbortError"){headerVideoFailed=true;showHeaderPoster();}
+      });
+    }
+    headerVideo.addEventListener("error",function(){headerVideoFailed=true;showHeaderPoster();});
+    document.addEventListener("visibilitychange",updateHeaderVideo);
+    window.addEventListener("pagehide",function(){headerVideo.pause();});
+    window.addEventListener("pageshow",updateHeaderVideo);
+    headerMotion.addEventListener("change",updateHeaderVideo);
+    if(headerConnection&&typeof headerConnection.addEventListener==="function")headerConnection.addEventListener("change",updateHeaderVideo);
+    updateHeaderVideo();
+  }
+
   const qrDialog=document.getElementById("social-qr-dialog");
   if(qrDialog&&typeof qrDialog.showModal==="function"){
     const qrMotion=window.matchMedia("(prefers-reduced-motion: reduce)");

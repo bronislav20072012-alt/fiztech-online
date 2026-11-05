@@ -1125,3 +1125,10 @@ html.social-qr-open{overflow:hidden}
  #advantages .online-benefits-link{width:100%;justify-content:center}
 }
 @media(max-width:370px){.donor-grid{grid-template-columns:1fr}}
+
+/* A silent film fills the header while its logo and navigation stay in front. */
+.site-header{isolation:isolate}
+.site-header>.head-inner{position:relative;z-index:1}
+.header-video-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.header-background-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.header-video-background::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#020a06b3,#020a0640 48%,#020a06a6)}

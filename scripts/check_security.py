@@ -16,6 +16,7 @@ REQUIRED = {
     "style-src": ["'self'"],
     "style-src-attr": ["'none'"],
     "img-src": ["'self'"],
+    "media-src": ["'self'"],
     "font-src": ["'self'"],
     "connect-src": ["'none'"],
     "object-src": ["'none'"],
@@ -43,7 +44,7 @@ class SecurityCheck(HTMLParser):
         for name, value in attributes:
             if name.startswith("on") or name == "style":
                 self.error(f"Inline executable/style attribute: {name}")
-            if name in {"href", "src", "action", "formaction"} and value:
+            if name in {"href", "src", "action", "formaction", "poster", "data-video-src"} and value:
                 parsed = urlsplit(value)
                 if parsed.scheme and parsed.scheme not in {"https", "mailto", "tel"}:
                     self.error(f"Unsafe URL scheme on {name}")
@@ -61,12 +62,12 @@ class SecurityCheck(HTMLParser):
                 self.policies.append(policy)
             if attrs.get("name", "").lower() == "referrer":
                 self.referrers.append(attrs.get("content"))
-        if tag in {"script", "link", "img", "iframe"}:
+        if tag in {"script", "link", "img", "iframe", "video", "audio", "source", "track"}:
             if not self.policies:
                 self.error("Resource appears before the security policy")
-            url = attrs.get("src", attrs.get("href", ""))
-            if urlsplit(url).netloc:
-                self.error(f"External {tag} resource")
+            for name in ["src", "href", "poster", "data-video-src"]:
+                if urlsplit(attrs.get(name, "")).netloc:
+                    self.error(f"External {tag} resource on {name}")
         if tag in {"style", "base", "iframe", "object", "embed"}:
             self.error(f"Unexpected active element: {tag}")
         if tag == "script":
