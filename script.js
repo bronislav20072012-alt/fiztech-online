@@ -1,5 +1,23 @@
 "use strict";
 document.addEventListener("DOMContentLoaded",function(){
+  // External event listeners keep image fallbacks compatible with a strict CSP.
+  function prepareLogo(image,loadedClass,fallback){
+    let fallbackAttempted=false;
+    function loaded(){image.parentElement.classList.add(loadedClass);}
+    function failed(){
+      image.parentElement.classList.remove(loadedClass);
+      if(fallback&&!fallbackAttempted){
+        fallbackAttempted=true;
+        image.src=fallback;
+      }
+    }
+    image.addEventListener("load",loaded);
+    image.addEventListener("error",failed);
+    if(image.complete){if(image.naturalWidth>0)loaded();else failed();}
+  }
+  document.querySelectorAll(".logo-full-image").forEach(function(image){prepareLogo(image,"logo-image-loaded");});
+  document.querySelectorAll(".planet-logo").forEach(function(image){prepareLogo(image,"has-logo","assets/ft-symbol.svg");});
+
   const qrDialog=document.getElementById("social-qr-dialog");
   if(qrDialog&&typeof qrDialog.showModal==="function"){
     const qrMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -304,6 +322,11 @@ document.addEventListener("DOMContentLoaded",function(){
     window.addEventListener("pageshow",resetContactSubmission);
     interestForm.addEventListener("submit",function(event){
       if(contactSubmitting){event.preventDefault();return;}
+      if(window.location.protocol!=="https:"){
+        event.preventDefault();
+        formStatus.textContent="Для отправки обращения откройте защищённую версию сайта: https://phystechonline.ru/";
+        return;
+      }
       ["interest-name","interest-email","interest-comment"].forEach(function(id){
         const input=document.getElementById(id);
         if(input)input.value=input.value.trim();

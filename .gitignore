@@ -1,0 +1,15 @@
+# Credentials and private local configuration must never be published.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.netrc
+.npmrc
+credentials*.json
+service-account*.json
+security-reports/
+__pycache__/
+*.pyc
