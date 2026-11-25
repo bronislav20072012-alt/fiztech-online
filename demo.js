@@ -31,7 +31,6 @@
   }
 
   // All state is deliberately confined to this page. No requests or persistence.
-  const week = { lesson: false, project: false, question: false, physics: false, xp: 680, topics: 12 };
   const names = {home:"Мой день",courses:"Мои курсы",messages:"Мессенджер",journal:"Дневник",projects:"Мои проекты",community:"Сообщество",notifications:"Уведомления",ai:"Физтех AI",passport:"Мой профиль"};
   const menuButton = $(".os-mobile-menu");
   const sidebar = $(".os-sidebar");
@@ -57,7 +56,7 @@
   matchMedia("(min-width:701px)").addEventListener("change", () => setMenu(false));
   function activateView(focus) {
     const raw = location.hash.slice(1);
-    const view = Object.hasOwn(names, raw) ? raw : (raw ? "courses" : "home");
+    const view = Object.hasOwn(names, raw) ? raw : "courses";
     $$("[data-os-panel]").forEach(panel => { panel.hidden = panel.dataset.osPanel !== view; });
     $$("[data-os-view]").forEach(link => {
       if (link.dataset.osView === view) link.setAttribute("aria-current", "page");
@@ -67,7 +66,6 @@
     document.title = names[view] + " — Физтех OS";
     setMenu(false);
     if (focus) { $("#heading-" + view).focus({preventScroll:true}); window.scrollTo(0,0); }
-    paintWeek();
   }
   function navigate(view) {
     if (!Object.hasOwn(names, view)) return;
@@ -164,7 +162,6 @@
     selectedCourse.done=Math.min(selectedCourse.total,selectedCourse.done+1);
     completed.set(selectedCourse.key, selectedCourse.done); courseDetails(); renderCourses();
     $("#course-dialog-status").textContent="Отлично! Демо-урок отмечен как пройденный. Прогресс обновлён.";
-    if (selectedCourse.grade === 9 && selectedCourse.name === "Алгебра" && !week.lesson) setLesson(true, true);
   });
   $("#course-dialog").addEventListener("close", () => {
     const card = $$(".os-course-card").find(node => node.dataset.courseKey === selectedCourse?.key);
@@ -198,44 +195,27 @@
   ];
   let currentDay=(new Date().getDay()+6)%7;
   let scheduleDay=currentDay;
-  const dayPlans=dayNames.map((_,i)=>{const items=i<5?[[timetable[i][0][1],"Разобраться в новой теме"],["Мой проект","Сделать один шаг к прототипу"],["Развитие","Записать главное открытие дня"]]:[["Время для себя","Отдохнуть и восстановить силы"],["Идея для проекта","Понаблюдать за миром вокруг"],["Свободное чтение","Выбрать интересную книгу"]];return {version:0,checked:[items[0][0]!=="Алгебра",false,false],items};});
+  const dayPlans=dayNames.map((_,i)=>({version:0,checked:[true,false,false],items:i<5?[[timetable[i][0][1],"Разобраться в новой теме"],["Мой проект","Сделать один шаг к прототипу"],["Развитие","Записать главное открытие дня"]]:[["Время для себя","Отдохнуть и восстановить силы"],["Идея для проекта","Понаблюдать за миром вокруг"],["Свободное чтение","Выбрать интересную книгу"]]}));
   function drawWeek(container,active,action){container.replaceChildren();shortDays.forEach((name,i)=>{const b=button(name,"",()=>action(i));b.setAttribute("aria-label",dayNames[i]);b.setAttribute("aria-pressed",String(i===active));container.append(b);});}
   function updateDayProgress(){const count=dayPlans[currentDay].checked.filter(Boolean).length;$("#day-progress").value=count;$("#day-progress-label").textContent=count+" / 3";}
   function renderDay(){
     drawWeek($("#day-selector"),currentDay,i=>{currentDay=i;renderDay();});
     $("#day-caption").textContent=dayNames[currentDay]+" · твой план";
     const tasks=$("#day-tasks");tasks.replaceChildren();
-    dayPlans[currentDay].items.forEach((item,i)=>{const label=el("label","os-task");const box=el("input");box.type="checkbox";box.checked=dayPlans[currentDay].checked[i];box.addEventListener("change",()=>{dayPlans[currentDay].checked[i]=box.checked;updateDayProgress();if(item[0]==="Мой проект")setProject(box.checked);else if(item[0]==="Алгебра")setLesson(box.checked,false);else paintWeek();});const copy=el("span");copy.append(el("strong","",item[0]),el("small","",item[1]));label.append(box,copy);tasks.append(label);});
+    dayPlans[currentDay].items.forEach((item,i)=>{const label=el("label","os-task");const box=el("input");box.type="checkbox";box.checked=dayPlans[currentDay].checked[i];box.addEventListener("change",()=>{dayPlans[currentDay].checked[i]=box.checked;updateDayProgress();});const copy=el("span");copy.append(el("strong","",item[0]),el("small","",item[1]));label.append(box,copy);tasks.append(label);});
     updateDayProgress();
     const list=$("#home-lessons");list.replaceChildren();
     timetable[currentDay].forEach(item=>{const row=el("div","os-lesson");const content=el("span");content.append(el("b","",item[1]),el("small","",item[2]));row.append(el("time","",item[0]),content);list.append(row);});
     if(!timetable[currentDay].length) list.append(el("p","os-context-note","Свободный день. Время для отдыха и собственных открытий."));
-    paintWeek();
   }
-  $("#create-day-plan").addEventListener("click",()=>{const plan=dayPlans[currentDay];plan.version++;plan.items=plan.version%2?[["Учебный практикум","Решить три задачи и разобрать ошибки"],["Мой проект","Задать команде один важный вопрос"],["Личный итог","Записать, что удалось сегодня"]]:[["Новая тема","Сформулировать вопросы к следующему уроку"],["Мой проект","Найти три примера из жизни"],["Команда","Поделиться своим открытием"]];plan.checked=plan.items.map(item=>item[0]==="Мой проект"?week.project:false);renderDay();toast("Подобран новый пример плана на день");});
+  $("#create-day-plan").addEventListener("click",()=>{const plan=dayPlans[currentDay];plan.version++;plan.items=plan.version%2?[["Учебный практикум","Решить три задачи и разобрать ошибки"],["Мой проект","Задать команде один важный вопрос"],["Личный итог","Записать, что удалось сегодня"]]:[["Новая тема","Сформулировать вопросы к следующему уроку"],["Исследование","Найти три примера из жизни"],["Команда","Поделиться своим открытием"]];plan.checked=[false,false,false];renderDay();toast("Подобран новый пример плана на день");});
   $("#os-today").textContent=new Intl.DateTimeFormat("ru-RU",{weekday:"long",day:"numeric",month:"long"}).format(new Date()).toUpperCase();
   function renderSchedule(){drawWeek($("#schedule-days"),scheduleDay,i=>{scheduleDay=i;renderSchedule();});const list=$("#schedule-list");list.replaceChildren();timetable[scheduleDay].forEach(item=>{const row=el("article","os-schedule-item");const copy=el("div");copy.append(el("h3","",item[1]),el("p","",item[2]));row.append(el("time","os-schedule-time",item[0]),copy,el("span","os-soft-tag","Онлайн · 45 минут"));list.append(row);});if(!timetable[scheduleDay].length){const empty=el("div","os-empty");empty.append(icon("spark"),el("h2","","Сегодня без уроков"),el("p","","Можно отдохнуть, почитать или вернуться к любимому проекту."));list.append(empty);}}
   const journalTabs=$$("[data-journal-tab]");
   function journalTab(tab){journalTabs.forEach(b=>{const active=b===tab;b.setAttribute("aria-selected",String(active));b.tabIndex=active?0:-1;});$$("[data-journal-panel]").forEach(p=>{p.hidden=p.dataset.journalPanel!==tab.dataset.journalTab;});}
   journalTabs.forEach((tab,i)=>{tab.addEventListener("click",()=>journalTab(tab));tab.addEventListener("keydown",e=>{let index;if(e.key==="ArrowRight")index=(i+1)%3;else if(e.key==="ArrowLeft")index=(i+2)%3;else if(e.key==="Home")index=0;else if(e.key==="End")index=2;else return;e.preventDefault();journalTabs[index].focus();journalTab(journalTabs[index]);});});
   [["Алгебра",[5,4,5,5]],["Английский язык",[5,5,4,5]],["Геометрия",[4,5,4,5]],["Физика",[5,5,5,4]],["Биология",[5,4,5,4]],["Русский язык",[4,5,5,5]],["Литература",[5,5,5,5]]].forEach(([subject,grades])=>{const row=el("tr");row.append(el("td","",subject));const marks=el("td");grades.forEach(g=>marks.append(el("span","os-grade-chip"+(g===5?" is-five":""),g)));const avg=(grades.reduce((a,b)=>a+b,0)/grades.length).toFixed(2).replace(".",",");row.append(marks,el("td","os-grade-average",avg),el("td","","—"),el("td","","—"));$("#grades-body").append(row);});
-  function renderAssignments(){
-    const rows=[["Алгебра","Решить задачи на квадратные уравнения · к следующему уроку","lesson"],["Физика","Подготовить пример применения закона инерции","physics"],["Мой проект","Описать три гипотезы для проверки","project"]];
-    const list=$("#assignment-list");list.replaceChildren();
-    rows.forEach(([title,desc,key])=>{
-      const done=Boolean(week[key]);
-      const row=el("article",done?"os-assignment is-done":"os-assignment");
-      const copy=el("div");copy.append(el("h3","",title),el("p","",desc));
-      const control=button(done?"Выполнено ✓":"Отметить выполненным","os-button os-button-secondary",()=>{
-        if(key==="lesson")setLesson(!week.lesson,false);
-        else if(key==="project")setProject(!week.project);
-        else{week.physics=!week.physics;renderAssignments();paintWeek();}
-      });
-      control.setAttribute("aria-pressed",String(done));
-      row.append(icon("journal"),copy,control);list.append(row);
-    });
-    $("#assignment-count").textContent=rows.filter(row=>!week[row[2]]).length;
-  }
+  [["Алгебра","Решить задачи на квадратные уравнения · к следующему уроку"],["Физика","Подготовить пример применения закона инерции"],["Мой проект","Описать три гипотезы для проверки"]].forEach(([title,desc])=>{const row=el("article","os-assignment");const copy=el("div");copy.append(el("h3","",title),el("p","",desc));let done=false;const control=button("Отметить выполненным","os-button os-button-secondary",()=>{done=!done;row.classList.toggle("is-done",done);control.textContent=done?"Выполнено ✓":"Отметить выполненным";control.setAttribute("aria-pressed",String(done));});control.setAttribute("aria-pressed","false");row.append(icon("journal"),copy,control);$("#assignment-list").append(row);});
 
   // Messenger: local demo conversations, not actual external communication.
   const chats=[
@@ -263,12 +243,12 @@
     ["Приложение для школы","Идея","Исследуем, какие школьные задачи можно сделать удобнее.","spark",["Поговорить с пятью учениками","Выбрать одну важную проблему","Нарисовать первые экраны","Собрать обратную связь"]],
     ["Фестиваль открытий","Командный проект","Событие, на котором каждый может поделиться своим открытием.","users",["Собрать команду организаторов","Выбрать темы мастерских","Подготовить программу","Провести встречу и обсудить впечатления"]]
   ];
-  projects.forEach(project=>{const card=el("article","os-project-card");const art=el("div","os-project-visual");art.append(icon(project[3]));const copy=el("div","os-project-copy");copy.append(el("span","os-soft-tag",project[1]),el("h2","",project[0]),el("p","",project[2]),button("Открыть проект ↗","os-button os-button-secondary",()=>openProject(project)));card.append(art,copy);$("#project-grid").append(card);});
+  projects.forEach(project=>{const card=el("article","os-project-card");const art=el("div","os-project-visual");art.append(icon(project[3]));const copy=el("div","os-project-copy");copy.append(el("span","os-soft-tag",project[1]),el("h2","",project[0]),el("p","",project[2]),button("Открыть проект ↗","os-button os-button-secondary",()=>{$("#project-dialog-title").textContent=project[0];$("#project-dialog-desc").textContent=project[2];$("#project-dialog-steps").replaceChildren(...project[4].map(t=>el("li","",t)));$("#project-dialog").showModal();}));card.append(art,copy);$("#project-grid").append(card);});
   [["Клуб исследователей","Наблюдаем за миром, ставим эксперименты и обсуждаем неожиданные результаты.","spark"],["Инженерная мастерская","От первого эскиза — к прототипу. Создаём устройства и учимся работать в команде.","project"],["Книжный клуб","Истории, которые помогают понимать других и находить собственный голос.","book"]].forEach(([title,desc,glyph])=>{const card=el("article","os-club");let joined=false;const control=button("Присоединиться","os-button os-button-secondary",()=>{joined=!joined;control.textContent=joined?"Вы в клубе ✓":"Присоединиться";control.setAttribute("aria-pressed",String(joined));toast(joined?"Участие отмечено в демо":"Участие в демо отменено");});control.setAttribute("aria-pressed","false");card.append(icon(glyph),el("h2","",title),el("p","",desc),control);$("#club-grid").append(card);});
 
   const notices=[{title:"Новое задание по алгебре",copy:"Практика по квадратным уравнениям уже в дневнике.",time:"Сегодня · 09:00",read:false,view:"journal"},{title:"Встреча клуба идей",copy:"Подготовь одно маленькое открытие, которым хочется поделиться.",time:"Сегодня · 10:20",read:false,view:"community"}];
   let noticeFilter="new";
-  function renderNotices(){const list=$("#notification-list");list.replaceChildren();const unread=notices.filter(n=>!n.read).length;$("[data-notice-count]").textContent=unread;$("[data-notice-count]").hidden=!unread;$("[data-notice-dot]").hidden=!unread;$("#read-all-notices").disabled=!unread;notices.filter(n=>n.read===(noticeFilter==="read")).forEach(n=>{const row=el("article","os-notification");const copy=el("div");copy.append(el("h2","",n.title),el("p","",n.copy),el("time","",n.time));row.append(icon("bell"),copy,button("Открыть","os-button os-button-secondary",()=>{n.read=true;if(n.view==="journal")journalTab($("#tab-assignments"));navigate(n.view);renderNotices();}));list.append(row);});if(!list.children.length){const empty=el("div","os-empty");empty.append(icon("check"),el("h2","",noticeFilter==="new"?"Ты всё прочитал":"Здесь будут прочитанные уведомления"),el("p","",noticeFilter==="new"?"Ничего важного не осталось незамеченным.":"Новые сообщения находятся в соседней вкладке."));list.append(empty);}}
+  function renderNotices(){const list=$("#notification-list");list.replaceChildren();const unread=notices.filter(n=>!n.read).length;$("[data-notice-count]").textContent=unread;$("[data-notice-count]").hidden=!unread;$("[data-notice-dot]").hidden=!unread;$("#read-all-notices").disabled=!unread;notices.filter(n=>n.read===(noticeFilter==="read")).forEach(n=>{const row=el("article","os-notification");const copy=el("div");copy.append(el("h2","",n.title),el("p","",n.copy),el("time","",n.time));row.append(icon("bell"),copy,button(n.read?"Открыть":"Прочитать","os-button os-button-secondary",()=>{if(n.read){navigate(n.view);}else{n.read=true;renderNotices();}}));list.append(row);});if(!list.children.length){const empty=el("div","os-empty");empty.append(icon("check"),el("h2","",noticeFilter==="new"?"Ты всё прочитал":"Здесь будут прочитанные уведомления"),el("p","",noticeFilter==="new"?"Ничего важного не осталось незамеченным.":"Новые сообщения находятся в соседней вкладке."));list.append(empty);}}
   $$("[data-notice-filter]").forEach(b=>b.addEventListener("click",()=>{noticeFilter=b.dataset.noticeFilter;$$("[data-notice-filter]").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));renderNotices();}));
   $("#read-all-notices").addEventListener("click",()=>{notices.forEach(n=>{n.read=true;});renderNotices();});
 
@@ -278,88 +258,10 @@
     else if(/фестив|меропр|клуб/.test(lower))prompts=["Для кого ты хочешь провести встречу?","Что участники смогут попробовать или узнать?","Кого стоит пригласить в команду организаторов?"];
     else prompts=["Для кого важна эта идея?","Какую конкретную проблему она решает?","Как проверить предположение небольшим экспериментом?"];
     const answer=$("#os-ai-answer");answer.textContent="Попробуем посмотреть на идею внимательнее:\n\n"+prompts.map((p,i)=>(i+1)+". "+p).join("\n")+"\n\nНачни с одного вопроса и обсуди ответ с наставником.";answer.hidden=false;
-    week.question=true;paintWeek();
   }
   $("#os-ai-form").addEventListener("submit",event=>{event.preventDefault();aiReply();});
   $$("[data-ai-prompt]").forEach(b=>b.addEventListener("click",()=>{$("#os-idea").value=b.dataset.aiPrompt;aiReply();}));
-  let level=10;$("#level-next").addEventListener("click",()=>{level++;week.xp=0;paintWeek();$("#level-number").textContent=level;$("#level-xp").textContent="0 / 1000 XP · новый этап";toast("Демо: открыт "+level+" уровень");});
+  let level=10;$("#level-next").addEventListener("click",()=>{level++;$("#level-number").textContent=level;$("#level-progress").value=0;$("#level-xp").textContent="0 / 1000 XP · новый этап";toast("Демо: открыт "+level+" уровень");});
 
-  function shiftGrade9Math(on){
-    const source=subjectData.find(row=>row[0]==="math");
-    const key=$("#course-year").value+":9:math";
-    const current=completed.get(key)??source[4];
-    const next=on?Math.min(source[5],current+1):Math.max(0,current-1);
-    completed.set(key,next);
-    if(selectedCourse&&selectedCourse.key===key){selectedCourse.done=next;if($("#course-dialog").open)courseDetails();}
-    renderCourses();
-  }
-  function setLesson(on,alreadyCounted){
-    if(week.lesson===on)return;
-    week.lesson=on;
-    if(!alreadyCounted)shiftGrade9Math(on);
-    week.xp+=on?40:-40;
-    week.topics+=on?1:-1;
-    dayPlans.forEach(plan=>{plan.items.forEach((item,index)=>{if(item[0]==="Алгебра")plan.checked[index]=on;});});
-    renderDay();
-    renderAssignments();
-    if(on)toast("Урок по алгебре отмечен в неделе");
-  }
-  function setProject(on){
-    if(week.project===on)return;
-    week.project=on;
-    dayPlans.forEach(plan=>{plan.items.forEach((item,index)=>{if(item[0]==="Мой проект")plan.checked[index]=on;});});
-    renderDay();
-    renderAssignments();
-    const firstStep=$("#project-dialog-steps").querySelector("li");
-    if($("#project-dialog-title").textContent==="Умная теплица"&&firstStep)firstStep.classList.toggle("is-done",week.project);
-    if(on)toast("Шаг проекта отмечен в неделе");
-  }
-  function openProject(project){
-    $("#project-dialog-title").textContent=project[0];
-    $("#project-dialog-desc").textContent=project[2];
-    const steps=project[4].map(text=>el("li","",text));
-    const greenhouse=project[0]==="Умная теплица";
-    if(greenhouse&&week.project&&steps[0])steps[0].classList.add("is-done");
-    $("#project-dialog-steps").replaceChildren(...steps);
-    $("#project-step").hidden=!greenhouse;
-    $("#project-dialog").showModal();
-  }
-  function paintWeek(){
-    const raw=location.hash.slice(1);
-    const view=Object.hasOwn(names,raw)?raw:(raw?"courses":"home");
-    const current={home:"plan",courses:"lesson",projects:"project",ai:"question"}[view];
-    $$("#os-trail a").forEach(link=>{
-      const step=link.dataset.trail;
-      const done=step==="lesson"?week.lesson:step==="project"?week.project:step==="question"?week.question:false;
-      link.classList.toggle("is-done",done);
-      if(step===current)link.setAttribute("aria-current","step");
-      else link.removeAttribute("aria-current");
-    });
-    $("#level-progress").value=week.xp;
-    $("#level-xp").textContent=week.xp+" / 1000 XP";
-    $("#stat-topics").textContent=week.topics;
-    $("#assignment-count").textContent=["lesson","physics","project"].filter(key=>!week[key]).length;
-  }
-  $$("#os-trail a").forEach(link=>link.addEventListener("click",event=>{
-    if(event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-    event.preventDefault();
-    const step=link.dataset.trail;
-    if(step==="plan")navigate("home");
-    else if(step==="lesson"){
-      $("#course-grade").value="9";
-      fillSubjects();renderCourses();
-      navigate("courses");
-      const course=catalogue().find(item=>item.id==="math");
-      if(course)openCourse(course);
-    }else if(step==="project"){
-      navigate("projects");
-      openProject(projects[0]);
-    }else if(step==="question"){
-      navigate("ai");
-      $("#os-idea").value="Хочу сделать умную теплицу";
-    }
-  }));
-  $("#project-step").addEventListener("click",()=>setProject(true));
-
-  fillSubjects();renderCourses();renderDay();renderSchedule();renderChatList();renderChat();renderAssignments();renderNotices();activateView(false);
+  fillSubjects();renderCourses();renderDay();renderSchedule();renderChatList();renderChat();renderNotices();activateView(false);
 })();
